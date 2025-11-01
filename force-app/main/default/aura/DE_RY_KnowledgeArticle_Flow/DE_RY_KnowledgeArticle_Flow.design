@@ -1,0 +1,3 @@
+<design:component label="Guided Flow in Knowledge">
+	<design:attribute name="cardTitle" label="Card Header Title" default="Guided Flow"/>
+</design:component>

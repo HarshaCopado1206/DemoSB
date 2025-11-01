@@ -1,0 +1,12 @@
+<design:component label="Back Button">
+
+    <design:attribute name="buttonName" label="Link Name"/>
+    <design:attribute name="buttonVariant" label="Back to Previous or Top" datasource="Back to Previous Page,Back to Top of Page"/>
+    <design:attribute name="buttonJustify" label="Button text justification" datasource="Left,Center,Right"/>
+    <design:attribute name="fontSize" label="Font size (in rem units)"/>
+    <design:attribute name="noLinkColor" label="No link color (#HEX)"/>
+    <design:attribute name="bottomMargin" label="Bottom margin (in pixels)"/>
+    <design:attribute name="topMargin" label="Top margin (in pixels)"/>
+    <design:attribute name="showAsLink" label="Show As Link"/>
+    
+</design:component>

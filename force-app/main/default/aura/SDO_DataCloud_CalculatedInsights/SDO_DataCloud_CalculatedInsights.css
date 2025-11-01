@@ -1,0 +1,11 @@
+.THIS .field-title{
+	color: #444444;
+    font-size: .75rem;
+}
+.THIS .field-value{
+    color: #181818;
+    font-size: 0.875rem;
+}
+.THIS .slds-wrap{
+    padding-left: 10px !important;
+}

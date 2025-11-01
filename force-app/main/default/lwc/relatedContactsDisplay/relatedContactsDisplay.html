@@ -1,0 +1,25 @@
+<template>
+    <lightning-card title="Related Contacts" icon-name="standard:contact">
+        <template if:true={displayedContacts}>
+            <div class="slds-p-around_small">
+                <div class="slds-grid slds-border_bottom slds-text-title_caps slds-p-bottom_x-small">
+                    <div class="slds-col slds-size_1-of-3"><strong>Name</strong></div>
+                    <div class="slds-col slds-size_1-of-3"><strong>Email</strong></div>
+                    <div class="slds-col slds-size_1-of-3"><strong>Related Accounts</strong></div>
+                </div>
+
+                <template for:each={displayedContacts} for:item="contact">
+                    <div key={contact.Id} class="slds-grid slds-p-vertical_x-small slds-border_bottom">
+                        <div class="slds-col slds-size_1-of-3">{contact.Name}</div>
+                        <div class="slds-col slds-size_1-of-3">{contact.Email}</div>
+                        <div class="slds-col slds-size_1-of-3">{contact.RelatedAccountCount}</div>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <template if:false={displayedContacts}>
+            <p class="slds-p-around_medium">No related contacts found.</p>
+        </template>
+    </lightning-card>
+</template>

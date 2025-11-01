@@ -1,0 +1,31 @@
+<aura:component implements="force:lightningQuickAction" controller="ResetDemo2">
+    <!--<aura:attribute name="recordId" type="String" default="500Hr00001tDUiiQAM"/>-->
+
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+	<aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+
+    <aura:attribute name="message" type="String"/>
+    
+    <div class="slds-text-longform slds-m-bottom_medium">
+        <p>This tool takes the following actions to reset this demo:</p>
+        <ul>
+            <li>Delete and Recreate Case "Pre-Surgical Consultation for Total Hip Replacement"</li>
+            <li>Set the Case status to "New"</li>
+            <!--<li>Attach the "Diabetes Consultation FAQ" article</li>-->
+            <li>Delete chatter feed in the last 30 mins</li>
+        </ul>
+    </div>
+    
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--Large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+    <lightning:button label="Reset Case" variant="brand" onclick="{!c.resetDemoFunction}"/>
+</aura:component>

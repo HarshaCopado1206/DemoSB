@@ -1,0 +1,31 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" controller="HLSVirtualCareController">
+    <lightning:utilityBarAPI aura:id="utilitybar"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="xDOVideoCallComponentEvent" event="c:xDOVideoCallComponentEvent" action="{!c.handleCallComponentEvent}"/>
+
+    <aura:attribute name="utilityId" type="String"/>
+    <aura:attribute name="showAppointmentNotificationAndList" type="Boolean" default="true"/>
+    <aura:attribute name="triggerRefreshAppointments" type="Boolean" default="false"/>
+    <aura:attribute name="showVideoCallSettings" type="Boolean" default="false"/>
+    <aura:attribute name="showVideoCall" type="Boolean" default="false"/>
+    <aura:attribute name="appointmentNotificationCleared" type="Boolean" default="false"/>
+    <aura:attribute name="appointment" type="Object"/>
+
+    <aura:if isTrue="{!v.showAppointmentNotificationAndList}">
+        <c:hlsVirtualCareUtilityBaseMock
+            notificationCleared="{!v.appointmentNotificationCleared}"
+            triggerRefreshAppointments="{!v.triggerRefreshAppointments}"
+            onnotificationshown="{!c.handleNotificationShown}"
+            onstartcall="{!c.startCall}"/>
+    </aura:if>
+
+    <aura:if isTrue="{!v.showVideoCallSettings}">
+        <c:xdoVideoCallSettingsMain/>
+    </aura:if>
+
+    <aura:if isTrue="{!v.showVideoCall}">
+        <c:xdoVideoCall appointment="{!v.appointment}"/>
+    </aura:if>
+    
+</aura:component>

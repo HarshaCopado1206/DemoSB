@@ -1,0 +1,6 @@
+<aura:component controller="DE_ResetDataClass" implements="force:lightningQuickActionWithoutHeader,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="result" type="String"/>  
+    
+    {!v.result}
+</aura:component>

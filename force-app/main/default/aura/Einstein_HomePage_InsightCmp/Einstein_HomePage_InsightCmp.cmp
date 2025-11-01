@@ -1,0 +1,164 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global">
+    <!-- aura:handler name="init" value="{!this}" action="{!c.doInit}"/ -->
+    <aura:attribute name="componentTitle" type="String" default="Einstein Insights"/>
+    <aura:attribute name="poNumber" type="String" default="10"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="section11Text" type="String" />    
+    <aura:attribute name="section12Text" type="String" />         
+    
+    <aura:attribute name="section21Text" type="String" />
+    <aura:attribute name="section22Text" type="String" />
+    <aura:attribute name="section23Text" type="String" />
+    <aura:attribute name="section24Text" type="String" />
+    <aura:attribute name="section25Text" type="String" />
+    <aura:attribute name="section26Text" type="String" />
+    
+    <aura:attribute name="section31Text" type="String" />
+    <aura:attribute name="section32Text" type="String" />
+
+    
+    <article class="slds-card">
+        <div class="slds-grid slds-einstein-header slds-card__header">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-grid slds-grid_vertical-align-center slds-size_3-of-4 slds-medium-size_2-of-3">
+                    <div class="slds-media__body">
+                        <h2 class="component-title slds-card__header-link slds-text-heading_small" title="Einstein Discovery">
+                            {!v.componentTitle}
+                        </h2>
+                    </div>
+                </div>
+                <div class="slds-einstein-header__figure slds-size_1-of-4 slds-medium-size_1-of-3"></div>
+            </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <div class="demo-jj-sic-2">
+                <ul class="slds-has-dividers_around-space">        
+                    <!-- item one -->
+                    <li class="slds-item">
+                        <article class="slds-tile slds-tile_board">
+                            <div class="slds-tile slds-media">
+                                <div class="slds-media__figure">                                
+                                    <span class="slds-icon_container slds-icon_add" title="Add to tasks">                                        
+	                                    <lightning:icon iconName="utility:add" size="xx-small" />
+                                    </span>
+                                </div>
+                                <div class="slds-media__body">
+                                    <h3 class="slds-tile__title slds-truncate" title="10 POs Outstanding - 5 Days to Month End">
+                                        <!--Dr. Daniel Lister *Scheduling Conflict*-->
+                                        <p>{!v.section11Text}</p>
+                                    </h3>
+                                    <a class="slds-tile__cta" href="javascript:void(0);">
+                                        <!--Ischemic Stroke Case-->
+                                        <p>{!v.section12Text}</p>
+                                    </a>
+                                    <div class="slds-tile__actions">
+                                        <div class="slds-form-element">                                
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-select_container">
+                                                    <select class="slds-select" id="select-01">
+                                                        <option value="">x</option>
+                                                        <option>O</option>
+                                                        <option>X</option>
+                                                        <option>O</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>                
+                        </article>
+                    </li>
+                    <!-- item two -->
+                    <li class="slds-item">            
+                        <article aura:id="toggleDetails" id="toggleDetails" class="slds-tile slds-tile_board">
+                            <div class="slds-tile slds-media">
+                                <div class="slds-media__figure" onclick="{!c.toggleDetails}">
+                                    <span class="slds-icon_container slds-icon_add" title="Expand">
+                                        <lightning:icon iconName="utility:add" size="xx-small" />
+                                    </span>
+                                    <span class="slds-icon_container slds-icon_dash" title="Collapse">
+                                        <lightning:icon iconName="utility:dash" size="xx-small" />
+                                    </span>
+                                </div>
+                                <div class="slds-media__body">
+                                    <h3 class="slds-tile__title slds-truncate" title="Dr. Lauren Bailey *REGISTERED*">
+                                        <!--Inventory Shortfall projected for upcoming surigcal case-->
+                                        <p>{!v.section21Text}</p>
+                                    </h3>
+                                    <a class="slds-tile__cta" href="javascript:void(0);" >
+                                        <!--Ischemic Stroke Case with Dr. Daniel Lister, MD-->
+                                        <p>{!v.section22Text}</p>
+                                    </a>
+                                    <div class="slds-tile__details">
+                                        <!--<p>View surgical visit for details.</p>-->
+                                        <p>{!v.section23Text}</p>
+                                        <a href="{!'/lightning/r/'+v.section24Text+'/'+v.section25Text+'/view'}" 
+                                           alt="View case for Dr. Lister" 
+                                           class="slds-button slds-button_custom slds-button_stretch">
+                                           <!--View surgical visit-->
+                                         <p>{!v.section26Text}</p>
+                                        </a>
+                                    </div>
+                                    <div class="slds-tile__actions">
+                                        <div class="slds-form-element">                                
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-select_container">
+                                                <select class="slds-select" id="select-01">
+                                                    <option value="">x</option>
+                                                    <option>O</option>
+                                                    <option>X</option>
+                                                    <option>O</option>
+                                                </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                
+                        </article>
+                    </li>
+                    <!-- item three -->    
+               		<li class="slds-item">
+                        <article class="slds-tile slds-tile_board">
+                            <div class="slds-tile slds-media">
+                                <div class="slds-media__figure">
+                                    <span class="slds-icon_container slds-icon_add" title="Add to tasks">
+                                        <lightning:icon iconName="utility:add" size="xx-small" />
+                                    </span>
+                                </div>
+                                <div class="slds-media__body">
+                                    <h3 class="slds-tile__title slds-truncate" title="10 POs Outstanding - 5 Days to Month End">
+                                        <!--{!v.poNumber} POs Outstanding - 5 Days to Month End-->
+                                        <p>{!v.section31Text}</p>
+                                        
+                                    </h3>
+                                    <a class="slds-tile__cta" href="javascript:void(0);">
+                                        <!--Tap Here to View-->
+                                        <p>{!v.section32Text}</p>
+                                    </a>
+                                    <div class="slds-tile__actions">
+                                        <div class="slds-form-element">                                
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-select_container">
+                                                    <select class="slds-select" id="select-01">
+                                                        <option value="">x</option>
+                                                        <option>O</option>
+                                                        <option>X</option>
+                                                        <option>O</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                
+                        </article>
+                    </li>
+                
+                </ul>
+            </div>
+        </div>
+    </article>
+</aura:component>

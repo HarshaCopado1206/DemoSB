@@ -1,0 +1,162 @@
+<aura:component implements="lightning:isUrlAddressable" access="global">
+
+    <!-- Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.handleInit}" />
+    <!-- Attributes -->
+    <aura:attribute name="logoImageSrc" type="String" default="https://hls-ido.s3.amazonaws.com/Healthcare/MCG.png" />
+    <aura:attribute name="checkboxGroup1List" type="List" default="[]" />
+    <aura:attribute name="checkboxGroup2List" type="List" default="[]" />
+    <aura:attribute name="checkboxGroup3List" type="List" default="[]" />
+    <aura:attribute name="checkboxGroup4List" type="List" default="[]" />
+    <aura:attribute name="checkboxGroup5List" type="List" default="[]" />
+    <aura:attribute name="checkboxGroup6List" type="List" default="[]" />
+
+    <!-- WorkspaceAPI -->
+    <lightning:workspaceAPI aura:id="guidelineWorkspace" />
+
+    <div class="cadalysGuidelinesModalContainer" style="position: relative;">
+        <div class="slds-fade-in-open slds-modal slds-modal_large CCIQUMGuidelineView">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <div class="slds-text-heading_medium">
+                        Inpatient and Surgical Care : Hip Arthroplasty
+                    </div>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium"
+                    style="height:100%;overflow:auto;position:relative;">
+                    <div class="slds-theme_alt-inverse card" role="banner">
+                        <div class="slds-media slds-media_center" style="height:77px">
+                            <div class="slds-media__body slds-p-left_medium">
+                                <div class="edition">
+                                    <h1 class="textHeading slds-m-right_small slds-truncate slds-align-middle slds-has-flexi-truncate"
+                                        title="Edition">
+                                        MCG - 23rd Edition
+                                    </h1>
+                                    <div class="view-name textSmall">
+                                        Product - Inpatient and Surgical Care
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-media__figure slds-media__figure_reverse" style="height: 79px;">
+                                <img src="{#v.logoImageSrc}" style="height: 79px;" />
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <lightning:accordion
+                            allowMultipleSectionsOpen="true"
+                            activeSectionName="['GI']"
+                        >
+                        <lightning:accordionSection name="GI" label="Guideline Information">
+                            <aura:set attribute="body">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-p-around_small slds-size_6-of-12">
+                                        <label class="slds-form-element__label">Goal Length of Stay</label>
+                                        <br/>
+                                        <span class="uiOutputText" data-aura-class="uiOutputText">
+                                            Ambulatory-2 (Days Postoperative)
+                                        </span>
+                                    </div>
+                                    <div class="slds-p-around_small slds-size_6-of-12">
+                                        <lightning:input type="number" label="Expected Length Of Stay" value="3"/>
+                                    </div>
+                                    <div class="slds-p-around_small slds-size_6-of-12">
+                                        <lightning:select label="Insurance Type">
+                                            <option value="commercial">Commercial</option>
+                                            <option value="medicare">Medicare</option>
+                                        </lightning:select>
+                                    </div>
+                                    <div class="slds-p-around_small slds-size_6-of-12">
+                                        <lightning:input type="datetime" label="Expected Admit Date" />
+                                    </div>
+                                    <div class="slds-p-around_small slds-size_6-of-12">
+                                        <lightning:input type="datetime" label="Expected Discharge Date" />
+                                    </div>
+                                    <div class="slds-p-around_small slds-size_6-of-12">
+                                        <lightning:input type="datetime" label="Actual Admit Date" />
+                                    </div>
+                                    <div class="slds-p-around_small slds-size_6-of-12">
+                                        <lightning:input type="datetime" label="Actual Discharge Date" />
+                                    </div>
+                                </div>
+                            </aura:set>
+                        </lightning:accordionSection>
+                    </lightning:accordion>
+                    </div>
+                    <div class="CCIQUMAssessmentView">
+                        <div class="slds-box slds-theme_shade heading">
+                            <h3 class="headingSize">Indications - Not Met</h3>
+                        </div>
+                    </div>
+                    <div style="border:1px solid #d8dde6;" class="slds-p-around_x-small">
+                        <div class="indication slds-p-horizontal--xxx-small">
+                            <span>Procedure is indicated for <span class="bold">1 or more </span>of the following<a class="ReferenceLink">(1)(2)(3)</a>:<a class="annotationText ReferenceLink">N</a></span>
+                            <div class="related-indications">
+                                <div class="indication slds-p-horizontal--xxx-small">
+                                    <span>Degenerative joint disease as indicated by 
+                                        <span class="bold">all</span>
+                                        of the following
+                                        <a class="ReferenceLink">(8)(9)</a>:
+                                    </span>
+                                    <div class="related-indications">
+                                        <div class="indication slds-p-horizontal--xxx-small">
+                                            <aura:iteration items="{!v.checkboxGroup1List}" var="item">
+                                                <div class="slds-form-element"><div class="slds-form-element__control"><span class="slds-checkbox"><label class="slds-checkbox__label"><input type="checkbox" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox"/><span class="slds-checkbox--faux"></span></label><span style="position:relative" class="CCIQUMLinkText"><span>{!item.label}</span></span></span></div></div>
+                                            </aura:iteration>
+
+                                            <span>Treatment is needed because of 1 or more of the following:</span>
+                                            <div class="related-indications">
+                                                <div class="indication slds-p-horizontal--xxx-small">
+                                                    <aura:iteration items="{!v.checkboxGroup2List}" var="item">
+                                                        <div class="slds-form-element"><div class="slds-form-element__control"><span class="slds-checkbox"><label class="slds-checkbox__label"><input type="checkbox" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox"/><span class="slds-checkbox--faux"></span></label><span style="position:relative" class="CCIQUMLinkText"><span>{!item.label}</span></span></span></div></div>
+                                                    </aura:iteration>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <aura:iteration items="{!v.checkboxGroup3List}" var="item">
+                                        <div class="slds-form-element" ><div class="slds-form-element__control"><span class="slds-checkbox"><label class="slds-checkbox__label"><input type="checkbox" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox"/><span class="slds-checkbox--faux"></span></label><span style="position:relative" class="CCIQUMLinkText"><span>{!item.label}<a class="ReferenceLink">{!item.link}</a></span></span></span></div></div> 
+                                    </aura:iteration>
+
+                                    <span>Pertrochanteric fracture and <span class="bold">1 or more </span>of the following<a class="ReferenceLink">(17)</a>: </span>
+                                    <div class="related-indications">
+                                        <div class="indication slds-p-horizontal--xxx-small">
+                                            <aura:iteration items="{!v.checkboxGroup4List}" var="item">
+                                                <div class="slds-form-element"><div class="slds-form-element__control"><span class="slds-checkbox"><label class="slds-checkbox__label"><input type="checkbox" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox"/><span class="slds-checkbox--faux"></span></label><span style="position:relative" class="CCIQUMLinkText"><span>{!item.label}</span></span></span></div></div>
+                                            </aura:iteration>
+                                        </div>
+                                    </div>
+                                    <aura:iteration items="{!v.checkboxGroup5List}" var="item">
+                                        <div class="slds-form-element" ><div class="slds-form-element__control"><span class="slds-checkbox"><label class="slds-checkbox__label"><input type="checkbox" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox"/><span class="slds-checkbox--faux"></span></label><span style="position:relative" class="CCIQUMLinkText"><span>{!item.label}<a class="ReferenceLink">{!item.link}</a></span></span></span></div></div> 
+                                    </aura:iteration>
+                                    <span>Revision of previous arthroplasty or resurfacing indicated by <span class="bold">1 or more </span>of the following<a class="ReferenceLink">(22)(23)(24)</a>:</span>
+                                    <div class="related-indications">
+                                        <div class="indication slds-p-horizontal--xxx-small">
+                                            <aura:iteration items="{!v.checkboxGroup6List}" var="item">
+                                                <div class="slds-form-element" ><div class="slds-form-element__control"><span class="slds-checkbox"><label class="slds-checkbox__label"><input type="checkbox" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox"/><span class="slds-checkbox--faux"></span></label><span style="position:relative" class="CCIQUMLinkText"><span>{!item.label}<a class="ReferenceLink">{!item.link == null ? '' : item.link}</a></span></span></span></div></div> 
+                                            </aura:iteration>
+        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="slds-text-align_center slds-p-vertical_small">
+                        <p>Copyright © 2020 Cadalys, Inc. All Rights Reserved.</p>
+                        <p>Copyright © 2020 MCG Health, LLC All Rights Reserved.</p>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer" style="position: fixed; width:100%; bottom:0px">
+                    <button class="slds-button slds-button_neutral slds-float_left" onclick="{!c.closeTab}">Cancel</button>
+                    <span>
+                        <button class="slds-button slds-button_brand" onclick="{!c.handleSubmit}">Save as Draft</button> 
+                        <button class="slds-button slds-button_brand" onclick="{!c.handleSubmit}">Submit and Proceed</button>
+                    </span>
+                </footer>
+            </div>
+        </div>
+    </div>
+</aura:component>

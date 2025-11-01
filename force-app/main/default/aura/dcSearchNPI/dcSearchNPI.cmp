@@ -1,0 +1,93 @@
+<aura:component implements="force:lightningQuickAction,lightning:availableForFlowScreens,flexipage:availableForRecordHome,force:hasRecordId" controller="dcSearchNPICtrl" access="global">   
+   <!--### declared attributes ###-->
+   <aura:attribute name="searchResult" type="List" description="use to store and display account list return from server"/>
+   <aura:attribute name="searchKeyword" type="String" description="use fto store user search input"/>
+   <aura:attribute name="Message" type="boolean" default="false" description="use to display no records found message"/>
+   <aura:attribute name="numberOfRecord" type="Integer" default="0" description="use to display Number of records"/>
+
+    
+    <div class="slds-box">    
+    <div class="slds-m-around--large">
+      <form class="slds-form--inline">
+         <div class="slds-form-element">
+            <label class="slds-form-element__label" for="search"></label>
+            <div class="slds-form-element__control">
+               <ui:inputText aura:id="searchId" class="slds-input" value="{!v.searchKeyword}" required="true" placeholder="Enter NPI..."/>
+            </div>
+         </div>
+         <div class="slds-form-element">
+            <button type="button" onclick="{!c.Search}" class="slds-button slds-button--brand">Search</button>
+         </div>
+      </form>
+      <span class="slds-badge">{!v.numberOfRecord}</span>
+      <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+         <thead>
+            <tr class="slds-text-title--caps">
+                <!--
+               <th scope="col">
+                  <div class="slds-truncate" title="Id">Id</div>
+               </th>
+				-->
+               <th scope="col">
+                  <div class="slds-truncate" title="Account Name">Provider Name</div>
+               </th>
+               <th scope="col">
+                  <div class="slds-truncate" title="NPI">NPI</div>
+               </th>                
+               <th scope="col">
+                  <div class="slds-truncate" title="Type">Type</div>
+               </th>
+               <!--
+               <th scope="col">
+                  <div class="slds-truncate" title="Industry">Industry</div>
+               </th>
+				-->
+               <th scope="col">
+                  <div class="slds-truncate" title="Phone">Phone</div>
+               </th>
+               <th scope="col">
+                  <div class="slds-truncate" title="Fax">Fax</div>
+               </th>
+            </tr>
+         </thead>
+         <tbody>
+            <aura:if isTrue="{!v.Message}">
+               <div class="slds-text-color--error"><i> No Results Found...</i></div>
+            </aura:if>
+            <!--### display all records of searchResult attribute by aura:iteration ###-->
+            <aura:iteration items="{!v.searchResult}" var="acc">
+               <tr>
+                   <!--
+                  <td>
+                     <div class="slds-truncate">{!acc.Id}</div>
+                  </td>
+					-->
+                  <td>
+                     <div class="slds-truncate">{!acc.Name}</div>
+                  </td>
+                  <td>
+                     <div class="slds-truncate">{!acc.Billing_NPI__c}</div>
+                  </td>                    
+                  <td>
+                     <div class="slds-truncate">{!acc.Type}</div>
+                  </td>
+                 <!-- 
+                  <td>
+                     <div class="slds-truncate">{!acc.Industry}</div>
+                  </td>
+					-->
+                  <td>
+                     <div class="slds-truncate">{!acc.Phone}</div>
+                  </td>
+                  <td>
+                     <div class="slds-truncate">{!acc.Fax}</div>
+                  </td>
+               </tr>
+            </aura:iteration>
+             
+         </tbody>
+      </table>
+       
+   </div>
+        </div>
+</aura:component>

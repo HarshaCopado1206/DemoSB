@@ -1,0 +1,16 @@
+<design:component>
+	
+    <design:attribute name="section11Text" label="First section header" description="Text goes here" />
+    <design:attribute name="section12Text" label="First section sub-header" description="Text goes here" />
+    
+    <design:attribute name="section21Text" label="Second section header" description="Text goes here" />
+    <design:attribute name="section22Text" label="Second section sub-header" description="Text goes here" />
+    <design:attribute name="section23Text" label="Second section 3rd sub-header" description="Text goes here" />
+    <design:attribute name="section24Text" label="Second section object name" description="Text goes here" />
+    <design:attribute name="section25Text" label="Second section record Id" description="Text goes here" />
+    <design:attribute name="section26Text" label="Second section button text" description="Text goes here" />
+    
+    <design:attribute name="section31Text" label="Third section header" description="Text goes here" />
+    <design:attribute name="section32Text" label="Third section sub-header" description="Text goes here" />
+    
+</design:component>

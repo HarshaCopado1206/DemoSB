@@ -1,0 +1,27 @@
+.THIS {}
+
+.THIS .badgefooter {
+    margin-top: 1rem;
+}
+
+.THIS .slds-card .slds-text-heading_small {
+    white-space: break-spaces !important;
+}
+
+.THIS .bold {
+    font-weight: bold;
+}
+
+.THIS .annotationText {
+    background-color: rgb(0, 95, 178);
+    color: white;
+    font-size: smaller;
+    padding: 0 1px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.THIS .ReferenceLink {
+    font-size: smaller;
+}

@@ -1,0 +1,58 @@
+<!-- Back Button for Experience Builder 
+	Lighting component for AURA communities. Component returns to the previous page or top of the cuttent page.
+	For questions or comments, contact Greg Jankowski (gjankowski@salesforce.com)
+
+    v1.0 11/24/20 Initial release 
+	v1.1 12/17/20 Added top and bottom margins
+-->
+
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+
+	<aura:attribute name="buttonName" type="String" default="Back" />
+    <aura:attribute name="buttonVariant" type="String" default="Back to Previous Page" /> 
+    <aura:attribute name="buttonJustify" type="String" default="Left" /> 
+    <aura:attribute name="showAsLink" type="Boolean" default="true" />
+    <aura:attribute name="fontSize" type="String" default="0.9" />
+    <aura:attribute name="noLinkColor" type="String" default="#6B6D70" /> 
+    <aura:attribute name="IconType" type="String" default="utility:chevronleft" /> 
+    <aura:attribute name="bottomMargin" type="String" default="0" />
+    <aura:attribute name="topMargin" type="String" default="0" />
+ 
+ <!--   Set button alignment -->
+    <div align="{!v.buttonJustify}" style="{!'margin-bottom: ' + v.bottomMargin + 'px; margin-top: ' + v.topMargin + 'px;'}" >
+      
+        <!-- If back to top -->
+        <aura:if isTrue="{!v.buttonVariant == 'Back to Top of Page'}">    
+            
+            <!-- Set the button properties and icon size -->
+            <button class="slds-button button-padding"> 
+                <lightning:icon iconName="utility:chevronup" size="x-small" alternativeText="{!v.buttonName}" />
+                <!-- Display the link text with or without styling -->
+                <aura:if isTrue="{!v.showAsLink}">
+                    <a style="{!'font-size: ' + v.fontSize + 'rem; '}" href="#">{!'&nbsp;' + v.buttonName + '&nbsp;'}</a>
+                    <aura:set attribute="else">
+                        <a href="#" style="{!'font-size: ' + v.fontSize + '!important; ' + 'color: ' + v.noLinkColor + ';'}">
+                            {!'&nbsp;' + v.buttonName + '&nbsp;'}</a>
+                    </aura:set>
+                </aura:if>        
+            </button>
+            
+            <!-- Else back to previous -->
+            <aura:set attribute="else">  
+                <!-- Set the button properties and icon size -->
+                <button class="slds-button button-padding" onclick="{!c.redirect}"> 
+                    <lightning:icon iconName="utility:chevronleft" size="x-small" alternativeText="{!v.buttonName}" />
+                    <!-- Display the link text with or without styling -->
+                    <aura:if isTrue="{!v.showAsLink}">
+                        <p style="{!'font-size: ' + v.fontSize + '; '}" >{!'&nbsp;' + v.buttonName + '&nbsp;'}</p>
+                        <aura:set attribute="else">
+                            <p style="{!'font-size: ' + v.fontSize + '!important; ' + 'color: ' + v.noLinkColor + ';'}">
+                                {!'&nbsp;' + v.buttonName + '&nbsp;'}</p>
+                        </aura:set>
+                    </aura:if>        
+                </button>
+            </aura:set>
+        </aura:if> 
+    </div>                                                               
+    
+</aura:component>

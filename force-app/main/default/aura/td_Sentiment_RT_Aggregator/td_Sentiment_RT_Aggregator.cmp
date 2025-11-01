@@ -1,0 +1,117 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName" access="global" controller="TDBotSentimentController">
+    <!-- init -->
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+    <!-- destroy -->
+    <aura:handler name="destroy" value="{!this}" action="{!c.onDestroy}"/>
+    
+    <!-- voice message subscribers -->
+    <force:serviceCloudVoiceToolkitApi aura:id="voiceToolkitApi"/>
+    
+    <!-- chat message subscribers -->
+    <lightning:conversationToolkitAPI aura:id="conversationKit" />
+    <aura:handler event="lightning:conversationNewMessage" action="{!c.onChatTranscriptCustomer}" />
+    <aura:handler event="lightning:conversationAgentSend" action="{!c.onChatTranscriptAgent}" />
+        
+    <!-- attributes -->
+    <aura:attribute name="message" type="String" default="No events received yet."/>
+    <aura:attribute name="transcript" type="String" default="No transcripts received yet."/>
+    <aura:attribute name="payload" type="String" default=""/>
+    <aura:attribute name="record" type="Object"/>
+    <aura:attribute name="helperList" type="List" />
+
+
+    <aura:attribute name="customerChatString" type="List" />
+
+    <aura:attribute name="username" type="String"/>
+    <aura:attribute name="sentimentModelId" type="String" default="CommunitySentiment" />
+
+
+    <aura:attribute name="transcriptProgress" type="String"/>
+
+
+    <aura:attribute name="obj" type="String" default="{!v.sObjectName}"/>
+    <aura:attribute name="recordId" type="String" />
+
+
+
+    <aura:attribute name="positive" type="Integer" default="0"/>
+    <aura:attribute name="negative" type="Integer" default="0"/>
+    <aura:attribute name="neutral" type="Integer" default="0"/>
+
+    
+    <!-- get record data -->
+    <force:recordData recordId="{!v.recordId}" layoutType="FULL" targetFields="{!v.record}"/>
+
+
+  
+    <article class="slds-card">
+        <div class="slds-grid slds-einstein-header slds-card__header">
+        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+        <div class="slds-grid slds-grid_vertical-align-center slds-size_3-of-4 slds-medium-size_2-of-3">
+        <div class="slds-media__body">
+        <h2 class="slds-truncate" title="Einstein (10+)">
+        <div  class="slds-card__header-link" title="Einstein (10+)">
+        <span class="slds-text-heading_small">Real Time Sentiment </span>
+        </div>
+        </h2>
+        </div>
+        </div>
+        <div class="slds-einstein-header__figure slds-size_1-of-4 slds-medium-size_1-of-3"></div>
+        </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <div class="body">
+                <!-- <template if:true={neutral > positive}>
+          
+                  </template> -->
+           
+                <div class="clm">
+                  <div
+                    class="img-icons"
+                    style="background-image:url('https://hls-ido.s3.amazonaws.com/positive.png')"
+                  ></div>
+                  <div data-id="positive"
+                    class="overlay-color"
+                    style="{! 'background-color: green; opacity: calc(' + v.positive + '/100);'}"
+                  ></div>
+          
+                  <p class="slds-p-horizontal_small">{!v.positive}%</p>
+                </div>
+          
+          
+                <div class="clm">
+                  <div
+                    class="img-icons"
+                    style="background-image:url('https://hls-ido.s3.amazonaws.com/neutral.png')"
+                  ></div>
+                  <div data-id="neutral"
+                    class="overlay-color"
+                    style="{! 'background-color: orange; opacity: calc(' + v.neutral + '/100);'}"
+                  ></div>
+                  <p class="slds-p-horizontal_small">{!v.neutral}%</p>
+                </div>
+          
+          
+                <div class="clm">
+                  <div
+                    class="img-icons"
+                    style="background-image:url('https://hls-ido.s3.amazonaws.com/negative.png')"
+                  ></div>
+                  <div data-id="negative"
+                    class="overlay-color"
+                    style="{! 'background-color: red; opacity: calc(' + v.negative + '/100);'}"
+                  ></div>
+                  <p class="slds-p-horizontal_small">{!v.negative}%</p>
+                </div>
+              </div>
+        </div>
+        <footer class="slds-card__footer">
+        <!-- <div class="slds-card__footer-action">View All
+        <span class="slds-assistive-text">Einstein Recommendations</span>
+        </div> -->
+        </footer>
+        </article>
+        
+
+</aura:component>

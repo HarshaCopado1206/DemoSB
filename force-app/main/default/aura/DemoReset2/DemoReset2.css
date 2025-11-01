@@ -1,0 +1,37 @@
+.THIS {
+}
+
+.THIS.container {
+    display: flex;
+    /* text-align: center; */
+    align-items: center;
+    padding: -4px;
+    justify-content: center;
+    height: 100%;
+}
+
+.THIS .btnContainer{
+    padding: 20px;
+    text-align:center;
+}
+
+.THIS .btnContainer p{
+    padding-bottom:10px;
+    text-decoration: underline;
+}
+
+.THIS .btnContainer button {
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #246ac3;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.THIS.slds-spinner_container {  
+  z-index: 10000;
+  position: fixed;   
+}

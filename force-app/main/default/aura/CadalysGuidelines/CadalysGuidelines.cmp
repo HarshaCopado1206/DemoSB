@@ -1,0 +1,204 @@
+<!-- Requestor: Tylor Rollings-->
+<!-- Assist: https://org62.lightning.force.com/lightning/r/SSE_Assist__c/a30Hr000005g2DPQAA/view -->
+<aura:component
+    implements="flexipage:availableForAllPageTypes,force:appHostable,lightning:isUrlAddressable,force:hasRecordId"
+    access="global" controller="CadalysController">
+
+    <!-- WorkspaceAPI -->
+    <lightning:workspaceAPI aura:id="cadalysGuidelineWorkspace" />
+    <aura:attribute name="pageReference" type="Object" />
+
+
+    <!-- Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.handleInit}" />
+
+    <!-- Attributes -->
+    <aura:attribute name="guidelinesList" type="List" default="[]" />
+    <aura:attribute name="recGuidelinesDiagnosesList" type="List" default="[]" />
+    <aura:attribute name="recGuidelinesServicesList" type="List" default="[]" />
+    <aura:attribute name="fullname" type="String" />
+    <aura:attribute name="lastModifiedDate" type="DateTime" />
+    <aura:attribute name="recommendedGuidelinesType" type="String" />
+
+    <div class="slds-p-around_small">
+        <div>
+            <div class="slds-text-align_right">
+                <lightning:button label="New Guidlines" />
+            </div>
+            <div class="slds-p-around_small">
+                <lightning:tabset onselect="{! c.updateLastModifiedDate }" selectedTabId="recommendedtab">
+                    <lightning:tab label="Guidelines" id="guidelinestab">
+                        <div name=" guidelinesContainer">
+                            <div name="topbar">
+                                <div class="slds-grid slds-wrap slds-grid_align-spread">
+                                    <div class="slds-col">
+                                    </div>
+                                    <div class="slds-col" name="cardViewToggleButton">
+                                        <div class="slds-form-element">
+                                            <label class="slds-checkbox_toggle slds-grid">
+                                                <span class="slds-form-element__label slds-m-bottom_none">Card
+                                                    View</span>
+                                                <input type="checkbox" name="checkbox-toggle-18"
+                                                    value="checkbox-toggle-18" aria-describedby="checkbox-toggle-18"
+                                                    checked="true" />
+                                                <span id="checkbox-toggle-18" class="slds-checkbox_faux_container"
+                                                    aria-live="assertive">
+                                                    <span class="slds-checkbox_faux"></span>
+                                                    <span class="slds-checkbox_on">Active</span>
+                                                    <span class="slds-checkbox_off">Inactive</span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-p-around_x-small" name="guidelines-cards">
+                                <aura:iteration items="{!v.guidelinesList}" var="guideline" indexVar="idx">
+                                    <div class="guidelines-card slds-box slds-box_small">
+                                        <lightning:card title="{!guideline.name}">
+                                            <aura:set attribute="actions">
+                                                <span
+                                                    class="slds-badge slds-theme_success slds-p-vertical_medium slds-m-right_x-small">
+                                                    Indications - Met</span>
+                                                <lightning:buttonMenu alternativeText="Show menu">
+                                                    <lightning:menuItem value="Launch Indications"
+                                                        label="Launch Indications" />
+                                                    <lightning:menuItem value="Launch Optimal Recovery Course"
+                                                        label="Launch Optimal Recovery Course" />
+                                                    <lightning:menuItem value="View logs" label="View logs" />
+                                                </lightning:buttonMenu>
+                                            </aura:set>
+                                            <div class="slds-grid slds-wrap">
+                                                <div class="slds-truncate slds-size_12-of-12 slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_4-of-12"
+                                                    title="Type"><label
+                                                        class="slds-form-element__label">Type</label><br /><span
+                                                        class="uiOutputText">ISC</span>
+                                                </div>
+                                                <div class="slds-truncate slds-size_12-of-12 slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_4-of-12"
+                                                    title="Type"><label class="slds-form-element__label">Full
+                                                        Name</label><br /><span
+                                                        class="uiOutputText">{!v.fullname}</span>
+                                                </div>
+                                                <div class="slds-truncate slds-size_12-of-12 slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_4-of-12"
+                                                    title="Type"><label class="slds-form-element__label">Last Modified
+                                                        Date</label><br /><span class="uiOutputText">
+                                                        <lightning:formattedDateTime value="{!v.lastModifiedDate}"
+                                                            year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                                            minute="2-digit" hour12="true" />
+                                                    </span>
+                                                </div>
+                                                <div class="slds-truncate slds-size_12-of-12 slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_4-of-12"
+                                                    title="Type"><label class="slds-form-element__label">Search
+                                                        Source</label><br /><span
+                                                        class="uiOutputText">Recommended</span>
+                                                </div>
+                                            </div>
+                                        </lightning:card>
+                                    </div>
+                                </aura:iteration>
+
+                                <div class="badgefooter slds-text-align_center">
+                                    <lightning:badge label="1/1" />
+                                </div>
+                            </div>
+                        </div>
+                    </lightning:tab>
+                    <lightning:tab label="Recommended Guidelines" id="recommendedtab">
+                        <div name="recommendedGuidelinesContainer">
+                            <div name="topbar">
+                                <div class="slds-grid slds-wrap slds-grid_align-spread">
+                                    <div class="slds-col">
+                                        <div class="slds-button-group" role="group">
+                                            <button class="slds-button slds-button_neutral" name="typebutton"
+                                                data-name="Diagnoses"
+                                                onclick="{!c.handleClickGuidelineType}">Diagnoses</button>
+                                            <button class="slds-button slds-button_neutral" name="typebutton"
+                                                data-name="Services"
+                                                onclick="{!c.handleClickGuidelineType}">Services</button>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col" name="cardViewToggleButton">
+                                        <div class="slds-form-element">
+                                            <label class="slds-checkbox_toggle slds-grid">
+                                                <span class="slds-form-element__label slds-m-bottom_none">Card
+                                                    View</span>
+                                                <input type="checkbox" name="checkbox-toggle-18"
+                                                    value="checkbox-toggle-18" aria-describedby="checkbox-toggle-18"
+                                                    checked="true" />
+                                                <span id="checkbox-toggle-18" class="slds-checkbox_faux_container"
+                                                    aria-live="assertive">
+                                                    <span class="slds-checkbox_faux"></span>
+                                                    <span class="slds-checkbox_on">Active</span>
+                                                    <span class="slds-checkbox_off">Inactive</span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div name="content">
+                                <lightning:accordion aura:id="accordion">
+                                    <aura:if isTrue="{!v.recommendedGuidelinesType == 'Diagnoses'}">
+                                        <lightning:accordionSection name="Diagnoses" label="m16.0">
+                                            <aura:iteration items="{!v.recGuidelinesDiagnosesList}" var="recItem"
+                                                indexVar="idx">
+                                                <div class="slds-box slds-box_small slds-m-bottom_x-small">
+                                                    <lightning:card title="{!recItem.name}">
+                                                        <aura:set attribute="actions">
+                                                            <lightning:button variant="brand" label="Launch"
+                                                                onclick="{!c.openSubtab}" />
+                                                        </aura:set>
+                                                        <div>
+                                                            <div class="slds-p-around_x-small"
+                                                                data-aura-rendered-by="16:56047;a"><label
+                                                                    class="slds-form-element__label">Product</label><br /><span
+                                                                    title="Inpatient and Surgical Care"
+                                                                    class="uiOutputText">{!recItem.product}</span>
+                                                            </div>
+                                                        </div>
+                                                    </lightning:card>
+                                                </div>
+                                            </aura:iteration>
+                                            <div class="badgefooter slds-text-align_center">
+                                                <lightning:badge label="1/1" />
+                                            </div>
+                                        </lightning:accordionSection>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.recommendedGuidelinesType == 'Services'}">
+                                        <lightning:accordionSection name="Services" label="27130">
+                                            <aura:iteration items="{!v.recGuidelinesServicesList}" var="recItem"
+                                                indexVar="idx">
+                                                <div class="slds-box slds-box_small slds-m-bottom_x-small">
+                                                    <lightning:card title="{!recItem.name}">
+                                                        <aura:set attribute="actions">
+                                                            <lightning:button variant="brand" label="Launch"
+                                                                onclick="{!c.openSubtab}" />
+                                                        </aura:set>
+                                                        <div>
+                                                            <div class="slds-p-around_x-small"
+                                                                data-aura-rendered-by="16:56047;a"><label
+                                                                    class="slds-form-element__label">Product</label><br /><span
+                                                                    title="Inpatient and Surgical Care"
+                                                                    class="uiOutputText">{!recItem.product}</span>
+                                                            </div>
+                                                        </div>
+                                                    </lightning:card>
+                                                </div>
+                                            </aura:iteration>
+                                            <div class="badgefooter slds-text-align_center">
+                                                <lightning:badge label="1/1" />
+                                            </div>
+                                        </lightning:accordionSection>
+                                    </aura:if>
+                                </lightning:accordion>
+                            </div>
+                        </div>
+                    </lightning:tab>
+
+                </lightning:tabset>
+            </div>
+        </div>
+    </div>
+
+</aura:component>

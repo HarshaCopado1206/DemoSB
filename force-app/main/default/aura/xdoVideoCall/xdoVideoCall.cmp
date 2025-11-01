@@ -1,0 +1,134 @@
+<aura:component controller="HLSVirtualCareController">
+    <aura:registerEvent name="enableWebcamEvent" type="c:xdoEnableWebcamEvent"/>
+    <aura:registerEvent name="xDOVideoCallComponentEvent" type="c:xDOVideoCallComponentEvent"/>
+
+    <aura:attribute name="appointment" type="Object"/>
+    <aura:attribute name="callStarted" type="Boolean" default="false"/>
+    <aura:attribute name="showGuestWaitingBar" type="Boolean" default="true"/>
+    <aura:attribute name="showGuestsWaitingTable" type="Boolean" default="false"/>
+    <aura:attribute name="cameraOn" type="Boolean" default="true"/>
+    <aura:attribute name="microphoneOn" type="Boolean" default="true"/>
+    <aura:attribute name="mainSectionClasses" type="String" default="mainSectionCallNotStarted mainSectionCallNotStartedHeightOne"/>
+
+    <aura:if isTrue="{!v.showGuestWaitingBar}">
+        <div class="guestWaitingBar">
+            <div class="slds-grid">
+                <div class="slds-col slds-size_4-of-12">
+                    <div class="slds-m-left_small slds-m-top_x-small block">
+                        <lightning:icon iconName="utility:groups" alternativeText="People" title="People" size="Small"/>
+                    </div>
+                    <div class="slds-m-left_x-small slds-m-top_small block">
+                        1 guest waiting to join the call
+                    </div>
+                </div>
+                <div class="slds-col slds-size_6-of-12">
+                    &nbsp;
+                </div>
+                <div class="slds-col slds-size_2-of-12">
+                    <div class="slds-m-top_small block">
+                        <a onclick="{!c.dismissNotification}" class="slds-text-link">Dismiss</a>
+                    </div>
+                    <div class="slds-m-left_large slds-m-top_small block">
+                        <a onclick="{!c.showGuestsWaitingModal}" class="slds-text-link">Review</a>
+                    </div>
+                </div>
+              </div>
+        </div>
+    </aura:if>
+    
+    <div class="{!v.mainSectionClasses}">
+        <aura:if isTrue="{!v.callStarted}">
+            <!--img src="{!v.appointment.meetingWithImageURL}" class="patientImage"></img-->
+            <img class="patientImage"></img>
+            <div class="guestNamePosition nameBubble slds-text-align_center">
+                &nbsp;&nbsp;{!v.appointment.meetingWithName}&nbsp;&nbsp;
+            </div>
+            <aura:set attribute="else">
+                <div class="groupsIcon">
+                    <lightning:icon iconName="utility:groups" alternativeText="People" title="People" size="Large"/>
+                </div>
+                <div class="onlyOneHereMessage slds-text-heading_small">You are the only one here</div>
+            </aura:set>
+        </aura:if>
+        <div class="nameBubble youBubblePosition slds-text-align_center">&nbsp;&nbsp;You&nbsp;&nbsp;</div>
+        <div class="providerVideoFeed">
+            <c:xdoWebcamStream showYouText="false" showMicLogo="false"/>
+        </div>
+    </div>
+
+    <div class="callActionBar">
+        <div class="slds-p-top_small">
+            <lightning:layout horizontalAlign="spread">
+                <lightning:layoutItem>
+                    <lightning:buttonIcon iconName="utility:settings"  variant="border-filled" alternativeText="Settings" title="Settings" class="slds-m-left_medium"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem>
+                    <lightning:layout horizontalAlign="spread">
+                        <lightning:layoutItem>
+                            <aura:if isTrue="{!v.cameraOn}">
+                                <lightning:buttonIcon
+                                    iconName="utility:video"
+                                    variant="border-filled"
+                                    alternativeText="Camera On"
+                                    title="Camera On"
+                                    class="slds-m-right_small"
+                                    onclick="{!c.toggleCamera}"/>
+                                <aura:set attribute="else">
+                                    <lightning:buttonIcon
+                                        iconName="utility:video_off"
+                                        variant="border-filled"
+                                        alternativeText="Camera Off"
+                                        title="Camera Off"
+                                        class="slds-m-right_small"
+                                        onclick="{!c.toggleCamera}"/>
+                                </aura:set>
+                            </aura:if>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem>
+                            <aura:if isTrue="{!v.microphoneOn}">
+                                <lightning:buttonIcon
+                                    iconName="utility:unmuted"
+                                    variant="border-filled"
+                                    alternativeText="Mic. On"
+                                    title="Mic. On"
+                                    class="slds-m-right_small"
+                                    onclick="{!c.toggleMicrophone}"/>
+                                <aura:set attribute="else">
+                                    <lightning:buttonIcon
+                                        iconName="utility:muted"
+                                        variant="border-filled"
+                                        alternativeText="Mic. Off"
+                                        title="Mic. Off"
+                                        class="slds-m-right_small"
+                                        onclick="{!c.toggleMicrophone}"/>
+                                </aura:set>
+                            </aura:if>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem>
+                            <lightning:buttonIcon
+                                iconName="utility:captions"
+                                variant="border-filled"
+                                alternativeText="Closed Captioning"
+                                title="Closed Captioning"
+                                class="slds-m-right_small"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem>
+                            <aura:if isTrue="{!v.callStarted}">
+                                <aura:set attribute="else">
+                                    <div class="block peopleWaitingBubble">+1</div>
+                                </aura:set>
+                            </aura:if>
+                            <lightning:buttonIcon iconName="utility:groups"  variant="border-filled" alternativeText="Partcipants" title="Partcipants" onclick="{!c.showGuestsWaitingModal}"/>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </lightning:layoutItem>
+                <lightning:layoutItem>
+                    <lightning:button variant="destructive" label="Leave Call" title="Leave Call" onclick="{!c.leaveCall}" class="slds-m-right_medium"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.showGuestsWaitingTable}">
+        <c:xdoVideoCallGuestsWaiting appointment="{!v.appointment}" onclosemodal="{!c.hideGuestsWaitingModal}"/>
+    </aura:if>
+</aura:component>

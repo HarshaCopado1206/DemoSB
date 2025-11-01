@@ -1,0 +1,20 @@
+<template>
+    <template if:true={events.length}>
+        <lightning-card title="Related Events">
+            <lightning-datatable
+                key-field="Id"
+                data={events}
+                columns={columns}
+                hide-checkbox-column>
+            </lightning-datatable>
+        </lightning-card>
+    </template>
+
+    <template if:true={error}>
+        <p class="slds-text-color_error">Error loading events: {error}</p>
+    </template>
+
+    <template if:true={hasNoEvents}>
+        <p>No events found.</p>
+    </template>
+</template>

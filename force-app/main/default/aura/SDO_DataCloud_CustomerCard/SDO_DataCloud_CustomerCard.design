@@ -1,0 +1,55 @@
+<design:component label="Data Cloud Customer Card">
+    
+    <design:attribute name="background" label="Background Hex Code" default="#004485" description="Customize with your own hex code. Please lead with #."/> 
+    <design:attribute name="inverseIconColors" label="Inverse Icon &amp; Text Color" default="true" description="Use this for dark background colors"/>
+    <design:attribute name="mini" label="Mini Card" default="false" />
+
+    <design:attribute name="metric1Icon"
+                      label="Icon for 1st Metric"
+                      datasource="None, Commerce, Einstein, Segment, Service"
+                      default="Commerce"/>
+    
+    <design:attribute name="metric1Label"
+                      label="Label for 1st Metric"
+                      default="Lifetime Value"
+                      description="Value driven by the Cust360_Metric2__c field"/>
+    
+    <design:attribute name="metric2Icon"
+                      label="Icon for 2nd Metric"
+                      datasource="None, Commerce, Einstein, Segment, Service"
+                      default="Segment"/>
+    
+    <design:attribute name="metric2Label"
+                      label="Label for 2nd Metric"
+                      default="Active Segments"/>
+    
+    <design:attribute name="metric2Value"
+                      label="Value for 2nd Metric"
+                      default="3"/>
+    
+    <design:attribute name="segmentNames"
+                      label="Segment Names"
+                      default="VIP, West Coast, Urban"
+                      description="Enter a maximum of 3 values separated by a comma"/>
+
+    
+    <!-- Which solutions power this data? -->
+    
+    <design:attribute name="Analytics" label="Analytics" default="true"/>    
+    <design:attribute name="Commerce" label="Commerce" default="true"/>       
+    <design:attribute name="Marketing" label="Marketing" default="true"/>    
+    <design:attribute name="Mulesoft" label="Mulesoft" default="true"/>  
+    <design:attribute name="Sales" label="Sales" default="true"/>
+    <design:attribute name="Service" label="Service" default="true"/>
+    <design:attribute name="SageMaker" label="SageMaker" default="true"/>
+    <design:attribute name="Snowflake" label="Snowflake" default="true"/>
+    
+    <sfdc:objects>
+        <sfdc:object>Account</sfdc:object>
+        <sfdc:object>Contact</sfdc:object>
+        <sfdc:object>Case</sfdc:object>
+        <sfdc:object>VoiceCall</sfdc:object>
+        <sfdc:object>MessagingSession</sfdc:object>
+    </sfdc:objects>
+    
+</design:component>

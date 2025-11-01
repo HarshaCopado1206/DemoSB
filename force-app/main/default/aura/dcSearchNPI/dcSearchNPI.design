@@ -1,0 +1,6 @@
+<design:component >
+
+        <design:attribute name="numberOfRecord" label="numberOfRecord" />
+        <design:attribute name="Message" label="Message" />
+    
+</design:component>

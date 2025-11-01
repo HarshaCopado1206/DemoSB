@@ -1,0 +1,9 @@
+<aura:component implements="lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome" access="global">
+
+   <aura:attribute name="recordId" type="String" default="" />
+        
+    <div class="slds-card">
+    <force:recordView recordId="{!v.recordId}" type="FULL"/>
+    </div>
+    
+</aura:component>

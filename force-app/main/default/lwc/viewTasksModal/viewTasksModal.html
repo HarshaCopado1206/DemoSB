@@ -1,0 +1,20 @@
+<template>
+    <template if:true={tasks.length}>
+      <lightning-card title="Related Tasks">
+        <lightning-datatable
+          key-field="Id"
+          data={tasks}
+          columns={columns}
+          hide-checkbox-column>
+        </lightning-datatable>
+      </lightning-card>
+    </template>
+  
+    <template if:true={error}>
+      <p class="slds-text-color_error">Error loading tasks: {error}</p>
+    </template>
+  
+    <template if:true={hasNoTasks}>
+      <p>No tasks found.</p>
+    </template>
+  </template>

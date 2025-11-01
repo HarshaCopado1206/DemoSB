@@ -1,0 +1,56 @@
+<apex:page showHeader="false" standardStylesheets="false" title="AI Agent Demo" standardController="Contact" extensions="HLS_ContactController"> 
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+          <meta charset="utf-8" />
+          <meta http-equiv="x-ua-compatible" content="ie=edge" />
+          <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+          <title>Agentforce Demo</title>
+    
+           <!-- Import the Design System style sheet -->
+           <apex:slds />
+        </head>
+        <body>
+            <!-- REQUIRED SLDS WRAPPER -->
+            <div class="slds-scope">
+                <apex:iframe src="{!departmentUrl}" scrolling="true" id="theIframe" />
+                <script>
+                    document.getElementById('theIframe').height = window.innerHeight;
+                    document.getElementById('theIframe').style = 'position: absolute;top: 0;left: 0;width: 100%;height: 100%;border: 0;';
+                </script>
+                <style type='text/css'>
+                    body{
+                        margin: 0px !important;
+                        padding: 0px;
+                    }
+                </style>
+            </div>
+        </body>
+     </html>
+    
+<!-- Insert MIAW Embed code below and overwrite this section -->
+
+
+<script type='text/javascript'>
+    function initEmbeddedMessaging() {
+        try {
+            embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
+
+            embeddedservice_bootstrap.init(
+                '00DHr00000Le6mq',
+                'SDO_Messaging_for_Web',
+                'https://storm-04de5c43023055.my.site.com/ESWSDOMessagingforWeb1738609920215',
+                {
+                    scrt2URL: 'https://storm-04de5c43023055.my.salesforce-scrt.com'
+                }
+            );
+        } catch (err) {
+            console.error('Error loading Embedded Messaging: ', err);
+        }
+    };
+</script>
+<script type='text/javascript' src='https://storm-04de5c43023055.my.site.com/ESWSDOMessagingforWeb1738609920215/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+
+
+<!-- End of MIAW embed code section -->    
+    
+</apex:page>

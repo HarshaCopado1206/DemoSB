@@ -1,0 +1,121 @@
+<aura:component controller="DE_RY_KnowledgeArticle_Flow">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.refreshView}" />
+	
+    <aura:attribute name="mode" type="string" default="view"></aura:attribute>
+    
+    <aura:attribute name="allFlows" type="sObject[]"></aura:attribute>
+    <aura:attribute name="flowsToShow" type="sObject[]"></aura:attribute>
+    <aura:attribute name="flowLabel" type="string"></aura:attribute>
+    
+    <aura:attribute name="currentFlowApiName" type="string"></aura:attribute>
+    <aura:attribute name="selectedFlowApiName" type="string"></aura:attribute>
+    
+    <aura:attribute name="entityId" type="String" />
+    <aura:attribute name="simpleRecord" type="Object"/>
+    <aura:attribute name="recordError" type="String"/>
+    
+    <force:recordData aura:id="recordLoaderChild"
+                      fields="Guided_Flow__c,PublishStatus"
+                      recordId="{!v.entityId}"
+                      targetFields="{!v.simpleRecord}"
+                      targetError="{!v.recordError}"
+                      recordUpdated="{!c.handleRecordUpdated}"
+                      mode="EDIT"
+                      />
+    
+    <aura:method name="updateFlow" action="{!c.onUpdateFlow}"></aura:method>
+    <aura:method name="detachFlow" action="{!c.confirmDetachFlow}"></aura:method>
+    
+    <div class="{!v.simpleRecord.PublishStatus == 'Draft' || empty(v.simpleRecord.Guided_Flow__c) ? 'slds-p-horizontal_small slds-p-bottom_small' : ''}">
+        <aura:if isTrue="{!v.mode=='view' &amp;&amp; v.simpleRecord.PublishStatus=='Draft' &amp;&amp; v.simpleRecord.Guided_Flow__c}">
+            <div class="slds-form" role="list">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                            <span class="slds-form-element__label">Selected Flow</span>
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__static">{!v.flowLabel}</div>
+                                <lightning:buttonIcon iconName="utility:edit" variant="bare" onclick="{! c.handleEdit }" alternativeText="Edit" title="Edit" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form__row slds-p-top_xx-small">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                            <span class="slds-form-element__label">Selected Flow - API Name</span>
+                            <div class="slds-form-element__control">
+                                <div class="slds-form-element__static">{!v.simpleRecord.Guided_Flow__c}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{!or(v.mode == 'edit', empty(v.simpleRecord.Guided_Flow__c))}">
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <div class="slds-combobox_container">
+                        <div aura:id="searchRes" class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-close" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                <lightning:input
+                                                 label="Select a Flow"
+                                                 aura:id="flow-search"
+                                                 name="flow-search"
+                                                 type="search"
+                                                 onchange="{!c.searchFlows}"
+                                                 onfocus="{!c.onFocus}"
+                                                 onblur="{!c.onBlur}"
+                                                 disabled="{!v.simpleRecord.PublishStatus != 'Draft'}"
+                                                 />
+                            </div>
+                            <div id="listbox-id-9" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
+                                <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                    <aura:iteration items="{!v.flowsToShow}" var="flow">
+                                        <li role="presentation" class="slds-listbox__item" onclick="{!c.selectFlow}" data-flowid="{!flow.Id}" title="{!flow.Label}" data-apiname="{!flow.ApiName}">
+                                            <div id="option1" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                                <span class="slds-media__figure slds-listbox__option-icon"></span>
+                                                <span class="slds-media__body">
+                                                    <span class="slds-listbox__option-text slds-listbox__option-text_entity" title="{!flow.Label}">{!flow.Label}</span>
+                                                    <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">{!flow.ApiName}</span>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </aura:iteration>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.simpleRecord.PublishStatus == 'Draft'}">
+                <div class="slds-p-vertical_small slds-text-align_center">
+                    <aura:if isTrue="{!not(empty(v.simpleRecord.Guided_Flow__c))}">
+                        <lightning:button variant="neutral" label="Cancel" onclick="{!c.onCancel}"/>
+                    </aura:if>
+                    <lightning:button variant="brand" label="Save" disabled="{!empty(v.selectedFlowApiName)}" onclick="{!c.attachFlow}"/>
+                </div>
+            </aura:if>
+        </aura:if>
+    </div>
+    <section aura:id="srModal" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-describedby="modal-content-id-1" class="slds-modal">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <lightning:buttonIcon class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" iconName="utility:close" variant="bare" alternativeText="Settings" onclick="{!c.closeModal}"/>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Detach Flow</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium">
+                <p class="slds-text-align_center">Are you sure you want to detach this flow?</p>
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning:button variant="neutral" label="Cancel" onclick="{!c.closeModal}"/>
+                <lightning:button variant="brand" label="Detach" onclick="{!c.onDetachFlow}"/>
+            </footer>
+        </div>
+    </section>
+    <div aura:id="modalBkdrp" class="slds-backdrop"></div>
+    
+</aura:component>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Quick Insights</masterLabel>
+    <description>Powefull Insights on the Home, App and Record Page.</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage, lightning__RecordPage, lightning__HomePage">
+            <property name="stringTitle" type="String" default="Insights" label="Component Title" description="Enter the Component Title string. Leave it blank for no Title."/>
+            <property name="stringIconName" type="String" default="standard:insights" label="Component Icon" description="Enter the Component Icon string. Leave it blank for no Icon."/>
+            <property name="stringFooter" type="String" default="" label="Component Footer" description="Enter the Component Footer string. Leave it blank for no Footer."/>
+            <property name="stringMetricStatus1" type="Boolean" default="True" label="Metric 1 Active" description="Is Metric 1 active?"/>
+            <property name="stringMetric1" type="String" default="NPS" label="Metric 1" description="Enter the Metric 1 string."/>
+            <property name="stringValue1" type="String" default="18" label="Value 1" description="Enter the Value 1 string."/>
+            <property name="stringValue1Color" type="String" default="Green" datasource="Black,Green,Yellow,Red" label="Value 1 Color" description="Enter the Value 1 Color string."/>
+            <property name="stringMetric1IconName" type="String" default="standard:endorsement" label="Metric 1 Icon" description="Enter the Metric 1 Icon string. Leave it blank for no Icon."/>
+            <property name="stringMetricStatus2" type="Boolean" default="True" label="Metric 2 Active" description="Is Metric 2 active?"/>
+            <property name="stringMetric2" type="String" default="Score" label="Metric 2" description="Enter the Metric 2 string."/>
+            <property name="stringValue2" type="String" default="-1" label="Value 2" description="Enter the Value 2 string."/>
+            <property name="stringValue2Color" type="String" default="Red" datasource="Black,Green,Yellow,Red,Blue,Orange" label="Value 2 Color" description="Enter the Value 2 Color string."/>
+            <property name="stringMetric2IconName" type="String" default="standard:reward" label="Metric 2 Icon" description="Enter the Metric 2 Icon string. Leave it blank for no Icon."/>
+            <property name="stringMetricStatus3" type="Boolean" default="True" label="Metric 3 Active" description="Is Metric 3 active?"/>
+            <property name="stringMetric3" type="String" default="Open Cases" label="Metric 3" description="Enter the Metric 3 string."/>
+            <property name="stringValue3" type="String" default="2" label="Value 3" description="Enter the Value 3 string."/>
+            <property name="stringValue3Color" type="String" default="Black" datasource="Black,Green,Yellow,Red,Blur,Orange" label="Value 3 Color" description="Enter the Value 3 Color string."/>
+            <property name="stringMetric3IconName" type="String" default="standard:case" label="Metric 3 Icon" description="Enter the Metric 3 Icon string. Leave it blank for no Icon."/>
+            <property name="stringMetricStatus4" type="Boolean" default="True" label="Metric 4 Active" description="Is Metric 4 active?"/>
+            <property name="stringMetric4" type="String" default="Member Since" label="Metric 4" description="Enter the Metric 4 string."/>
+            <property name="stringValue4" type="String" default="July, 2020" label="Value 4" description="Enter the Value 4 string."/>
+            <property name="stringValue4Color" type="String" default="Black" datasource="Black,Green,Yellow,Red,Blue,Orange" label="Value 4 Color" description="Enter the Value 4 Color string."/>
+            <property name="stringMetric4IconName" type="String" default="standard:date_input" label="Metric 4 Icon" description="Enter the Metric 4 Icon string. Leave it blank for no Icon."/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

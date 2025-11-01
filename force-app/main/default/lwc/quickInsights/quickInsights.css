@@ -1,0 +1,50 @@
+.link {
+  color: #069;
+  cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.metric {
+    font-weight: bold; 
+    font-size: 1em;
+}
+
+.value {
+    font-weight: normal; 
+    font-size: 1em;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.yellow {
+    color: yellow;
+}
+
+.black {
+    color: black;
+}
+
+.blue {
+    color: blue;
+}
+
+.orange {
+    color:orange;
+}
+
+.metricvalues {
+    margin-top:5px;
+    border:1px solid #eef4ff;
+    border-radius:4px;
+    background-color: #eef4ff;
+    font-weight: 700;
+}

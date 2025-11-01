@@ -1,0 +1,14 @@
+<aura:component implements="force:lightningQuickAction" controller="ResetDemo">
+    <aura:attribute name="message" type="String"/>
+    
+    <div class="slds-text-longform slds-m-bottom_medium">
+        <p>This tool takes the following actions to reset this demo:</p>
+        <ul>
+            <li>Clone and update Case "Diabetes Consultation Appointment"</li>
+            <li>Set the Case status to "New"</li>
+            <li>Attach the "Diabetes Consultation FAQ" article</li>
+            <li>Delete the original Cases</li>
+        </ul>
+    </div>
+    <lightning:button label="Reset Demo" variant="brand" onclick="{!c.resetDemoFunction}"/>
+</aura:component>

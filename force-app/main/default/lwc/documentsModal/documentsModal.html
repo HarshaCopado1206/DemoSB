@@ -1,0 +1,20 @@
+<template>
+  <template if:true={documents.length}>
+    <lightning-card title="Documents">
+      <lightning-datatable
+        key-field="docId"
+        data={documents}
+        columns={columns}
+        hide-checkbox-column>
+      </lightning-datatable>
+    </lightning-card>
+  </template>
+
+  <template if:true={error}>
+    <p class="slds-text-color_error">Error loading documents</p>
+  </template>
+
+  <template if:true={hasNoDocuments}>
+    <p>No documents found.</p>
+  </template>
+</template>

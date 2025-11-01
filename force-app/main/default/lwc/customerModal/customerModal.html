@@ -1,0 +1,17 @@
+<template>
+    <lightning-modal-header label="Customer Details"></lightning-modal-header>
+
+    <lightning-modal-body>
+        <template if:true={customer}>
+            <p><strong>Name:</strong> {customer.Name}</p>
+            <p><strong>Phone:</strong> {customer.Phone}</p>
+            <p><strong>Industry:</strong> {customer.Industry}</p>
+            <p><strong>Billing City:</strong> {customer.BillingCity}</p>
+        </template>
+
+        <template if:true={error}>
+            <p class="slds-text-color_error">Error loading customer details.</p>
+        </template>
+    </lightning-modal-body>
+
+</template>

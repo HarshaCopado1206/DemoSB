@@ -1,0 +1,30 @@
+.THIS .img-icons {
+    height: 64px;
+    width: 66px;
+    background-size: cover;
+    margin-bottom: 15px;
+    z-index: 2 !important;
+    display: block;
+    position: relative;
+}
+
+.THIS .body{ 
+    padding: 20px;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.THIS .clm{
+    margin: 0 auto;
+}
+
+.THIS .overlay-color{
+    height: 60px;
+    width: 61px;
+    top: 116px;
+    margin-left: 3.5px;
+    position: absolute;
+    border-radius: 35px;
+    z-index: 1;
+}

@@ -1,0 +1,63 @@
+.THIS .toggleBar {
+    display: flex;
+    width: 10px;
+    position: fixed;
+    z-index: 999;
+    flex-direction: column;
+    justify-content: center;
+    bottom: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+.THIS .einsteinMenuIcon {
+    position: fixed;
+    z-index: 100;
+    right: 290px;
+    top: 0.75rem;
+    cursor: pointer;
+}
+
+
+.THIS .einsteinMenuIconActive {
+    position: fixed;
+    z-index: 100;
+    right: 290px;
+    top: 0.75rem;
+    cursor: pointer;
+    --slds-c-icon-color-foreground:#07618b; 
+}
+.THIS .einstein-sidebar {
+    
+    display: flex;
+    /*position: relative;*/
+
+}
+.THIS .main-content {
+    overflow-y: auto;
+    height: 84vh;
+}
+.THIS .main-section.slds-grow {
+    flex-grow: 1;
+    overflow: hidden;
+    height: 84vh;
+}
+
+.THIS .slds-grid.layout-container {
+    max-height: 84vh;
+}
+.THIS .side-panel {
+    height: 87vh;
+}
+.THIS .side-panel.collapsed {
+    width:0px;
+    visibility:hidden;
+    opacity:0;
+    transition: width .2s ease, visibility 0s, opacity .5s linear;
+}
+.THIS .side-panel.expanded {
+    width:400px;
+    visibility: visibile;
+    opacity:1;
+    transition: width 500ms ease, visibility 50ms 350ms, opacity 0.5s linear;
+}

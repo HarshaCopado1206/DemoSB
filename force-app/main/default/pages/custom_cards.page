@@ -1,0 +1,336 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>
+        <apex:slds />
+        <apex:includeLightning />
+        <title>Welcome</title>
+        <!-- Move the styles into a CSS file -->
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            
+            .hidden {
+                display:none;
+            }
+            
+            .slds-scope .progress-container h2 {
+                margin-top: 1rem;
+                font-size: 1.1rem;
+                text-align: center;
+            }
+
+            .slds-scope .page-title input {
+                border: 0px none;
+                border-bottom: 1px solid #C8D6E2;
+            }
+            
+            .slds-scope .item {
+                    border: 1px solid #D8DDE6;
+                    border-radius: 5px;
+                    height: 11rem;
+                    width: 31%;
+            }
+            
+            
+            .slds-scope .item .icon {
+                width: 280px;
+                height: 160px;
+                margin: 0px auto;
+                background-repeat: no-repeat;
+                background-size: auto 120px;
+                background-position: center center;                
+            }
+            
+            a.disabled {
+                background-color:#eff4f9;
+                cursor: default;
+                pointer-events:none;
+            }
+            
+
+            .slds-scope ul li.item .label {
+                clear: both;
+            }
+
+            .slds-scope .slds-m-around--x-large {
+                margin: 1rem;
+            }
+
+            .slds-scope a:hover, .slds-scope a:focus {
+                text-decoration: none;
+                color: rgb(0, 95, 178);
+            }
+            .slds-icon-standard-green-sa {
+                background-color: rgb(106, 137, 41);
+            }
+            .slds-icon-sales-targets-card {
+                background-color: rgb(84, 105, 141);
+            }
+            .icon-care-plan-card {
+                background-color: rgb(67, 156, 186);
+            }
+            .icon-case-card {
+                background-color: rgb(242, 207, 91);
+            }
+            .icon-referral-card {
+                background-color: rgb(248, 137, 98);
+            }
+            .icon-patient-card {
+                background-color: #8a76f0;
+            }
+            .icon-visit-card {
+                background-color: rgb(67, 156, 186);
+            }    
+            .slds-icon-rebates-card {
+                background-color: rgb(72, 199, 200);
+            }
+        </style>    
+    </head>
+    <body>
+        <div class="slds-scope">
+            <div class="slds-p-around_small widget-screen" id="container">
+             <div  class="app-framework-app-details">
+                    <div class="progress-container slds-m-around--xx-small">
+                            <h2>Select objects to include in your app</h2>
+                            <h4>You must select at least one object.</h4>
+                    </div>
+                    <div class="slds-form-element__control">
+                        <ul class="slds-grid slds-wrap slds-p-top-xx-small" id="lightningComp">
+                        </ul>
+                    </div>
+            </div>
+            </div>
+        </div>
+       
+        
+        <script type="text/javascript" src="/analytics/wave/sdk/js/50.0/wizard-min.js"></script>
+        <script>
+                var metadataValues = {};
+                function showCards(cards) {
+                    $Lightning.use("waveapps:objectCardApp", function() {
+                                
+                                $Lightning.createComponent("waveapps:objectCard",
+                                    { "cards" : cards },
+                                    "lightningComp",
+
+                                    function(cmp) {
+                                            // Event Service hander to handele the lightning component custom event
+                                            $A.eventService.addHandler({ "event": "waveapps:sendEventToVFPage", "handler": retrieveEventData });
+                                    }
+
+                                );
+                    });
+                    
+                }
+
+                
+
+                function retrieveEventData(event) {
+                    
+                    var updatedCard =  event.getParam('card');
+                    Controller.update({
+                        "name" : updatedCard.isSelectedKey,
+                        "value" : updatedCard.isSelected
+                    },function(variables) {
+                        console.warn("update returned:", variables);
+                        metadataValues[variables[0].name] = variables[0].value;
+                        checkAndDisableNextButton();
+                        updateCardDependents();
+                    });
+                    
+                }
+
+                function updateCardDependents() {
+                   
+                    var dependents = metadataValues.dependsVariable ? metadataValues.dependsVariable : [];
+                    for(index=0; index<dependents.length; index++) {
+                        var key = dependents[index].key;
+                        var cards = dependents[index].cardsList;
+                        var isAllTrue = true;
+                        for(index2=0; index2 < cards.length; index2++) {
+                            if(!metadataValues[cards[index2]]){
+                                isAllTrue = false;
+                                break;
+                            }
+                        }
+                        Controller.update({
+                            "name" : key,
+                            "value" : isAllTrue
+                            },function(variables) {
+                                console.warn("update returned: ", variables);
+                        });
+                    }
+                }
+
+
+(function (global, wave) {
+    "use strict";
+    var metadata = {};
+
+    var methods = {
+
+        ready: function(size, callback) {
+            size = size || "small";
+            var visible = false;
+            wave.wizard.publish({name : 'wizard.ready',  "payload" : {size : size, banner: {visible: visible}}, callback : function (response) {
+                var payload = response.payload;
+                metadata = {
+                    page : payload.page,
+                    variableDefinitions : payload.variableDefinitions,
+                    values : payload.initialValues
+                };
+                if (callback instanceof Function) {
+                    callback(metadata);
+                }
+            }});
+        },
+        update: function (payload, callback, eventName)
+        {
+            var eventName = eventName ? eventName : 'wizard.update';
+            wave.wizard.publish({
+                name : eventName,
+                payload : payload,
+                callback : function (response) {
+                    var variables = response.payload;
+                    if (callback instanceof Function) {
+                        callback(variables);
+                    }
+                }
+            });
+        },
+        disableNextButton: function(disable) {
+                    wave.wizard.publish({
+                    name: 'wizard.buttons',
+                    "payload": {
+                        buttons: {
+                        next: {
+                            disabled: disable
+                        }
+                        }
+                    },
+                    callback: function(response) {
+                        console.log("Next button is disabled if none of the cards are selected.");
+                        }
+                    });
+        }
+    };
+
+    if (!global.Controller) {
+        global.Controller = {};
+    }
+
+    global.Controller = methods;
+    wave.wizard.subscribe({
+        name: 'wizard.next',
+        onData: function(response){
+           
+        }
+    })
+
+} (window, Wave));
+
+function checkAndDisableNextButton() {
+    var cards = metadataValues.SObjectCards ? metadataValues.SObjectCards : [];
+           var isAtleastOneCardSelected = false;
+           for(var index = 0; index < cards.length; index++) {
+
+              if(metadataValues[cards[index].name] && metadataValues[cards[index].isSelectedKey]) {
+                  isAtleastOneCardSelected = true;
+                  break;
+              }
+           }
+    Controller.disableNextButton(!isAtleastOneCardSelected);
+}
+
+function addLoadEvent(func) {
+    var oldonload = window.onload;
+    if (typeof window.onload != 'function') {
+        window.onload = func;
+    }
+    else {
+        window.onload = function() {
+            if (oldonload) {
+                oldonload();
+            }
+            func();
+        }
+    }
+}
+
+function setSize(size) {
+    for (var key in containerSizeClasses) {
+        var container = document.querySelector("#container");
+        removeClass(container, containerSizeClasses[key].join("\",\""));
+    }
+    var c2 = document.querySelector("#container");
+    addClass(c2, containerSizeClasses[size].join("\",\""));
+}
+
+function hasClass(ele, cls) {
+    var classes = ele.getAttribute('class');
+    var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+    return reg.test(classes);
+}
+
+function addClass(ele, cls) {
+    // console.warn("adding class " + cls + " to element " + ele);
+
+    if (! hasClass(ele, cls)) {
+        var classes = ele.getAttribute('class');
+        ele.setAttribute('class', classes+" "+cls);
+    }
+}
+
+function removeClass(ele, cls) {
+    // console.warn("removing class " + cls + " from element " + ele);
+
+    if (hasClass(ele, cls)) {
+        var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+        var classes = ele.getAttribute('class');
+        var newClasses = classes.replace(reg, ' ');
+        ele.setAttribute('class', newClasses);
+    }
+}
+
+// Note that the SLDS sizes are smaller than the wizard counterparts
+var containerSizeClasses = {
+    "small": ["slds-container--medium"],
+    "medium": ["slds-container--large"],
+    "large": ["slds-container--x-large"]
+};
+
+addLoadEvent(function() {
+    var size = "medium";
+    setSize(size);
+     function controllerReady(){
+        Controller.ready(size, function(metadata) {
+            wizardMetadata = metadata;
+            console.warn("controller.ready callback");
+            
+            var cards = metadata.values.SObjectCards;
+            for(var index = 0; index < cards.length; index++) {
+                cards[index].isExist = metadata.values[cards[index].name];
+                cards[index].isSelected = metadata.values[cards[index].isSelectedKey];
+            }
+            metadataValues = metadata.values;
+            checkAndDisableNextButton();
+            showCards(cards);          
+            
+        });
+    }
+    setTimeout(function(){
+        controllerReady();          
+    });
+});
+
+
+
+
+        </script>
+        
+
+    </body>
+</html>    
+</apex:page>
