@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle
+	xmlns="http://soap.sforce.com/2006/04/metadata" fqn="figmaEmbed">
+	<apiVersion>61.0</apiVersion>
+	<isExposed>true</isExposed>
+	<masterLabel>Figmagic™ Embed</masterLabel>
+	<description>This component embeds a Figma prototype. Created by Chris Mendoza</description>
+	<targets>
+		<target>lightning__AppPage</target>
+		<target>lightning__RecordPage</target>
+		<target>lightning__HomePage</target>
+	</targets>
+	<targetConfigs>
+		<targetConfig targets="lightning__AppPage,lightning__RecordPage,lightning__HomePage">
+			<property name="embedUrl" type="String" label="Figma Embed URL" description="The URL in Figma's Embed UI"/>
+			<property name="width" type="String" label="Width" description="Width of the embedded content (e.g., 500px or 100%)" default="100%"/>
+			<property name="height" type="String" label="Height" description="Height of the embedded content (e.g., 600px or 100%)" default="600px"/>
+			<property name="scaling" type="String" label="Scaling" description="Scaling (default: scale-down-width)" default="scale-down-width" datasource="min-zoom,contain,scale-down,scale-down-width,scale-up"/>
+			<property name="contentScaling" type="String" label="Content Scaling" description="Content scaling (default: responsive)" default="responsive" datasource="fixed,responsive"/>
+			<property name="spinnerDuration" type="Integer" label="Spinner Duration (ms)" description="Spinner duration in milliseconds" default="4000"/>
+			<property name="spinnerHexColor" type="String" label="Spinner Hex Color" description="Hex color of the spinner background (default: #FFFFFF (white))" default="#FFFFFF"/>
+			<property name="spinnerOpacity" type="String" label="Spinner Opacity" description="Opacity of the spinner background (1 is 100%)" default="1"/>
+			<property name="hideUi" type="Boolean" label="Hide UI" description="Hides the Figma UI (default: true)" default="true"/>
+		</targetConfig>
+	</targetConfigs>
+</LightningComponentBundle>

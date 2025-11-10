@@ -1,0 +1,7 @@
+<design:component label="SCV Simulator Call Controls">
+    
+     <sfdc:objects>
+        <sfdc:object>VoiceCall</sfdc:object>
+    </sfdc:objects>
+	
+</design:component>

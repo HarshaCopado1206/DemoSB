@@ -1,0 +1,26 @@
+<template>
+    <lightning-modal-header label="Hierarchy Info"></lightning-modal-header>
+
+    <lightning-modal-body>
+        <template if:true={hierarchy}>
+            <p><strong>Account:</strong> {hierarchy.name}</p>
+
+            <template if:true={hierarchy.children.length}>
+                <p><strong>Child Accounts:</strong></p>
+                <ul>
+                    <template for:each={hierarchy.children} for:item="child">
+                        <li key={child.id}>{child.name}</li>
+                    </template>
+                </ul>
+            </template>
+
+            <template if:false={hierarchy.children.length}>
+                <p>No child accounts found.</p>
+            </template>
+        </template>
+
+        <template if:true={error}>
+            <p class="slds-text-color_error">Error loading hierarchy</p>
+        </template>
+    </lightning-modal-body>
+</template>

@@ -1,0 +1,14 @@
+<design:component label="SCV Simulator Call Transcript">
+	<design:attribute name="conversation" label="Select a Conversation" 
+                      datasource="apex://SDO_Service_SCVConversationPicklist" />
+    
+    <design:attribute name="height" label="Component Height:" description="" default="400px"/>
+    
+    <design:attribute name="textBubbleColor" label="Conversation Bubble Background Color (Agent):" 
+                      description="Enter hexidecimal or rgb value color choice" default="rgb(1, 68, 134)"/>
+    
+    <sfdc:objects>
+        <sfdc:object>VoiceCall</sfdc:object>
+    </sfdc:objects>
+                    
+</design:component>

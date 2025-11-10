@@ -1,0 +1,7 @@
+<design:component label="SCV Simulator Conversation Preview">
+    
+    <sfdc:objects>
+        <sfdc:object>SDO_Service_SCVConversation__c</sfdc:object>
+    </sfdc:objects>
+                    
+</design:component>

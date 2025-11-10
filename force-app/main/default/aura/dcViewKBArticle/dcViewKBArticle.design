@@ -1,0 +1,3 @@
+<design:component>
+	<design:attribute name="recordId" label="recordId" description="Input recordId of KB Article either from article URL or query KnowledgeArticleVersion object in Workbench" />	
+</design:component>

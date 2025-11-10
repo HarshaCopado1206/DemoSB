@@ -1,0 +1,6 @@
+<template>
+    <c-audio-player></c-audio-player>
+    <template if:true={showConfetti}>
+        <c-lwc-labs-confetti emojis={emojis} number={number} size={size} type='emoji'></c-lwc-labs-confetti>
+    </template>
+</template>

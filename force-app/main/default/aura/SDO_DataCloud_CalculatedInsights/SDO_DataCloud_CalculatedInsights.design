@@ -1,0 +1,31 @@
+<design:component label="Data Cloud Calculated Insights">
+    
+    <design:attribute name="metric1Label"
+                      label="Label for 1st Metric"
+                      default="CSAT"
+                      description="Value driven by the SDO_Cust360_CSAT__c field"/>
+    
+    <design:attribute name="metric2Label"
+                      label="Label for 2nd Metric"
+                      default="Net Promoter Score"
+                      description="Value driven by the Cust360_Metric3__c field"/>
+    
+	<design:attribute name="metric3Label"
+                      label="Label for 3rd Metric"
+                      default="Preferred Channel"
+                      description="Value driven by the Cust360_Metric4__c field"/>
+    
+    <design:attribute name="metric4Label"
+                      label="Label for 4th Metric"
+                      default="Lifetime Value"
+                      description="Value driven by the Cust360_Metric2__c field"/>
+    
+    <sfdc:objects>
+        <sfdc:object>Account</sfdc:object>
+        <sfdc:object>Contact</sfdc:object>
+        <sfdc:object>Case</sfdc:object>
+        <sfdc:object>VoiceCall</sfdc:object>
+        <sfdc:object>MessagingSession</sfdc:object>
+    </sfdc:objects>
+	
+</design:component>

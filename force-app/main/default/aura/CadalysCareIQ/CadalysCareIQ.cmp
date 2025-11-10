@@ -1,0 +1,355 @@
+<!--
+    Company:        Salesforce
+    ComponentName:  CadalysCareIQ.cmp
+    Description:    https://org62.lightning.force.com/lightning/r/SSE_Assist__c/a30Hr000005g2DOQAC/view
+    Date:           8-May-2019     
+
+-->
+<aura:component implements="flexipage:availableForAllPageTypes" access="global">
+
+    <aura:handler name="init" value="{!this}" action="{!c.handleInit}" />
+    <aura:attribute name="currentStepInteger" type="Integer" default="1" />
+    <aura:attribute name="currentStepString" type="String" default="1" />
+
+    <aura:attribute name="S1GenderInput" type="String" default="male" />
+    <aura:attribute name="S1AgeInput" type="Integer" />
+    <aura:attribute name="S1ProblemInput" type="Integer" />
+    <aura:attribute name="IsS1Submitted" type="Boolean" default="false" />
+
+    <aura:attribute name="alphabeticalTabs" type="List" />
+    <aura:attribute name="symptomsList" type="List" />
+    <aura:attribute name="symptomsPresetList1" type="List" />
+    <aura:attribute name="symptomsPresetList2" type="List" />
+    <aura:attribute name="riskFactorsList" type="List" />
+
+    <aura:attribute name="headacheLevelOptions" type="List" default="[
+        {'label': 'Mild', 'value': 'Mild'},
+        {'label': 'Moderate', 'value': 'Moderate'},
+        {'label': 'Severe', 'value': 'Severe'}
+    ]"/>
+    <aura:attribute name="headacheLevelValue" type="String" default=""/>
+    <aura:attribute name="headacheDurationOptions" type="List" default="[
+        {'label': 'Less than 3 months', 'value': 'Less than 3 months'},
+        {'label': 'More than 3 months', 'value': 'More than 3 months'}
+    ]"/>
+    <aura:attribute name="headacheDurationValue" type="String" default=""/>
+    <aura:attribute name="isSymptomSectionExpanded" type="Boolean" default="false"/>
+    <aura:attribute name="isRiskSectionExpanded" type="Boolean" default="false"/>
+    
+
+
+
+    <div class="CadalysCmp" style="padding: 20px;">
+
+        <!-- <lightning:spinner alternativeText="Loading" size="medium" /> -->
+        <lightning:progressIndicator currentStep="{!v.currentStepString}" type="path" variant="base">
+            <lightning:progressStep label="Patient Information" value="1" onclick="{!c.clickOnBar}" />
+            <lightning:progressStep label="Diagnosis Process" value="2" onclick="{!c.clickOnBar}" />
+            <lightning:progressStep label="Summary" value="3" onclick="{!c.clickOnBar}" />
+        </lightning:progressIndicator>
+
+        <div>
+            <aura:if isTrue="{!v.currentStepInteger == 1}">
+                <aura:if isTrue="{!v.IsS1Submitted == false}">
+                    <div class="slds-box slds-m-bottom_x-small">
+                        <div class="slds-tile__title slds-truncate slds-text-heading_small">
+                            Answer the questions below, please:</div>
+                        <ul class="slds-chat-list">
+                            <li class="slds-chat-listitem slds-chat-listitem_inbound">
+                                <div class="slds-chat-message" data-aura-rendered-by="5355:0">
+                                    <div class="slds-chat-message__body" data-aura-rendered-by="5356:0">
+                                        <div class="slds-chat-message__text slds-chat-message__text_inbound"
+                                            data-aura-rendered-by="5357:0">Are you male or female?</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="slds-chat-message">
+                                <div style="margin-top: 12px" data-aura-rendered-by="4641:0">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-form-element__legend slds-form-element__label"></legend>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-radio_button-group">
+                                                <span class="slds-button slds-radio_button">
+                                                    <input type="radio" name="genderRadio" id="male" value="male"
+                                                        checked="true" onclick="{!c.handleS1GenderChange}" />
+                                                    <label class="slds-radio_button__label" for="male">
+                                                        <span class="slds-radio_faux">Male</span>
+                                                    </label>
+                                                </span>
+                                                <span class="slds-button slds-radio_button">
+                                                    <input type="radio" name="genderRadio" id="female" value="female"
+                                                        onclick="{!c.handleS1GenderChange}" />
+                                                    <label class="slds-radio_button__label" for="female">
+                                                        <span class="slds-radio_faux">Female</span>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </li>
+                            <li class="slds-chat-listitem slds-chat-listitem_inbound">
+                                <div class="slds-chat-message">
+                                    <div class="slds-chat-message__body">
+                                        <div class="slds-chat-message__text slds-chat-message__text_inbound">How old are you?</div>
+                                    </div>
+                                </div>
+                            </li> 
+                            <li class="slds-chat-listitem">
+                                <div class="slds-chat-message">
+                                    <lightning:input type="number" class="S1Input" name="age" label="" step="1"
+                                        required="true" value="{!v.S1AgeInput}" />
+                                </div>
+                            </li>
+
+                            <li class="slds-chat-listitem slds-chat-listitem_inbound">
+                                <div class="slds-chat-message">
+                                    <div class="slds-chat-message__body">
+                                        <div class="slds-chat-message__text slds-chat-message__text_inbound">Tell about the main symptoms or problems you are having.</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="slds-chat-listitem">
+                                <div class="slds-chat-message">
+                                    <lightning:input class="S1Input" name="problem" label="" required="true"
+                                        value="{!v.S1ProblemInput}" />
+                                </div>
+                            </li>
+                            <li class="slds-chat-listitem slds-chat-listitem_outbound">
+                                <button class="slds-button slds-button_neutral" type="button"
+                                    onclick="{!c.handleS1Submit}">Submit</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <aura:set attribute="else">
+                        <div class="slds-box slds-color__background_gray-1 slds-m-bottom_x-small">
+                            <div style="width: 30rem;">
+                                <article class="slds-tile">
+                                    <div class="slds-tile__title slds-truncate slds-text-heading_small">Patient
+                                        Information:</div>
+                                    <div class="slds-tile__detail slds-m-top--x-small">
+                                        <dl class="slds-list_horizontal slds-wrap">
+                                            <dt class="slds-item_label slds-text-color_weak slds-truncate"
+                                                title="First Label" data-aura-rendered-by="6373:0">Gender:</dt>
+                                            <dd class="slds-item_detail slds-truncate" data-aura-rendered-by="6375:0">
+                                                {!v.S1GenderInput}</dd>
+                                            <dt class="slds-item_label slds-text-color_weak slds-truncate"
+                                                title="Second Label">Age:</dt>
+                                            <dd class="slds-item_detail slds-truncate">{!v.S1AgeInput}</dd>
+                                            <dt class="slds-item_label slds-text-color_weak slds-truncate"
+                                                title="Second Label">Problem:</dt>
+                                            <dd class="slds-item_detail slds-truncate">{!v.S1ProblemInput}
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </aura:set>
+                </aura:if>
+                <div class="slds-box slds-m-bottom_x-small" style="padding:1.75rem">
+                    <div class="slds-tile__title slds-truncate slds-p-bottom_medium slds-text-heading_small">
+                        Possible Symptons
+                        <span class="slds-float_right">
+                            <lightning:buttonIcon aura:id="symptonsExpandButton" iconName="utility:chevrondown" onclick="{! c.handleExpandToggle }" alternativeText="Details" />
+                        </span>
+                    </div>
+                    <div class="possibleSymptomsTable slds-hide" id="symptonsExpandButton">
+                        <lightning:tabset variant="scoped" selectedTabId="all">
+                            <lightning:tab label="Headache,pulsating">
+                                <aura:iteration items="{!v.symptomsPresetList1}" var="item">
+                                    <div class="height2 flex">
+                                        <ui:inputCheckbox label="" name="{!item.label}"/>
+                                        <span class="form-element__label uiLabel slds-p-left_small">{!item.label}</span>
+                                    </div>
+                                </aura:iteration>
+                            </lightning:tab>
+                            <lightning:tab label="Facial pain, paranasal sinus">
+                                <aura:iteration items="{!v.symptomsPresetList2}" var="item">
+                                    <div class="height2 flex">
+                                        <ui:inputCheckbox label="" name="{!item.label}"/>
+                                        <span class="form-element__label uiLabel slds-p-left_small">{!item.label}</span>
+                                    </div>
+                                </aura:iteration>
+                            </lightning:tab>
+                            <lightning:tab label="All Symptoms" id="all">
+                                <lightning:tabset variant="vertical">
+                                    <lightning:tab label="A">
+                                        <aura:iteration items="{!v.symptomsList}" var="symptomsItem">
+                                            <div class="height2 flex">
+                                                <!-- <lightning:input style="display:inline-block;" type="checkbox"
+                                                    label="{!symptomsItem.label}" /> -->
+                                                <ui:inputCheckbox label="" name="{!symptomsItem.label}"/>
+                                                <span class="form-element__label uiLabel slds-p-left_small">{!symptomsItem.label}</span>
+
+                                                <span style="display:inline-block;"
+                                                    class="{!symptomsItem.more ? '':'slds-hide'}">
+                                                    <lightning:icon iconName="utility:chevronright" size="xx-small"
+                                                        class="clickable slds-p-left_small" alternativeText="expand" />
+
+                                                </span>
+                                            </div>
+                                        </aura:iteration>
+                                    </lightning:tab>
+                                    <aura:iteration items="{!v.alphabeticalTabs}" var="letter">
+                                        <lightning:tab label="{!letter}"></lightning:tab>
+                                    </aura:iteration>
+                                </lightning:tabset>
+                            </lightning:tab>
+                        </lightning:tabset>
+                    </div>
+
+                    <hr />
+
+                    <div class="slds-tile__title slds-p-bottom_large slds-truncate slds-text-heading_small">
+                        Risk Factors
+                        <span class="slds-float_right">
+                            <lightning:buttonIcon aura:id="riskExpandButton" iconName="utility:chevrondown" onclick="{! c.handleExpandToggle }" alternativeText="Details" />
+                        </span>
+                    </div>
+                    <div class="slds-hide riskFactorsTable" id="riskExpandButton">
+                        <lightning:tabset variant="scoped">
+                            <lightning:tab label="A">
+                                <aura:iteration items="{!v.riskFactorsList}" var="riskItem">
+                                    <div class="height2 flex">
+                                         <!-- <lightning:input style="display:inline-block;" type="checkbox"
+                                            label="{!riskItem.label}" />  -->
+                                        <ui:inputCheckbox label="" name="{!riskItem.label}"/>
+                                        <span class="form-element__label uiLabel slds-p-left_small">{!riskItem.label}</span>
+                                    </div>
+                                </aura:iteration>
+                            </lightning:tab>
+                            <aura:iteration items="{!v.alphabeticalTabs}" var="letter">
+                                <lightning:tab label="{!letter}"></lightning:tab>
+                            </aura:iteration>
+                        </lightning:tabset>
+                    </div>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.currentStepInteger == 2}">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_2-of-3">
+                        <div class="slds-box">
+                            <div name="qsRadioGroup" class="slds-p-around_medium">
+                                <lightning:radioGroup name="headacheLevelRadioGroup"
+                                label="How strong is your headache?"
+                                options="{! v.headacheLevelOptions }"
+                                value="{! v.headacheLevelValue }"
+                                type="radio"/>
+                                <div class="slds-text-align_right">
+                                    <lightning:button label="Next" onclick="{!c.showHiddenQuestion}"/>
+                                </div> 
+                            </div> 
+                           
+                            <div name="qsRadioGroup2" id="hiddenRadioGroup" class="slds-hide slds-p-around_medium">
+                                <lightning:radioGroup name="headacheDurationRadioGroup"
+                                label="How long have you had your headache?"
+                                options="{! v.headacheDurationOptions }"
+                                value="{! v.headacheDurationValue }"
+                                type="radio"/>
+                                <div class="slds-text-align_right">
+                                    <lightning:button label="Next" onclick="{!c.handleNext}"/>
+                                </div>
+                            </div> 
+                        </div>
+
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <div>
+                            <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate slds-m-around--xx-small">Possible Conditions:</h2>
+                            <div style="display: flex;align-items: center;">
+                                <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" role="progressbar">
+                                    <span class="slds-progress-bar__value" style="width:70%">
+                                        <span class="slds-assistive-text">70%</span>
+                                    </span>
+                                    <div><span class="slds-text-body--small slds-m-left--xx-small">Moderate evidence</span></div>
+                                </div>
+                                <span class="slds-text-body_regular slds-m-left--small">Acute rhinosinusitis</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </aura:if>
+            <aura:if isTrue="{!v.currentStepInteger == 3}">
+                <div class="slds-box slds-m-around--x-small">
+                    <lightning:layout horizontalAlign="slds-grid_align-space">
+                        <lightning:layoutItem size="10">
+                            <div style="display: flex;align-items: center;">
+                                <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="85" role="progressbar">
+                                    <span class="slds-progress-bar__value" style="width:85%; background:red !important">
+                                        <span class="slds-assistive-text">85%</span>
+                                    </span>
+                                    <div><span class="slds-text-body--small slds-m-left--xx-small">Strong evidence</span></div>
+                                </div>
+                                <span class="slds-text-title_caps slds-m-left--small">Acute rhinosinusitis</span>
+                                <span><div class="icd10-badge slds-badge slds-m-left--small" title="ICD-10 Code"><span class="white-text">J01</span></div></span>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="2"> 
+                            <div class="severity-box slds-m-right--large slds-box slds-p-around--xx-small slds-float_right yellow" title="Severity"><span class="white-text slds-text-title_caps">moderate</span></div>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+
+                    <ul class="slds-has-block-links_space slds-m-left--large slds-m-top_medium">
+                        <li class="slds-item slds-m-bottom--xx-small">
+                            <span class="slds-text-heading_label-normal">Categories:</span>
+                            <span class="badge slds-badge slds-m-left--xx-small">Laryngology/ENT</span>
+                        </li>
+                        <li class="slds-item slds-m-bottom--xx-small">
+                            <span class="slds-text-heading_label-normal">Clinical Name:</span>
+                            <span class="slds-text-body_regular slds-m-left--small">Acute rhinosinusitis</span>
+                        </li>
+                        <li class="slds-item slds-m-bottom--xx-small">
+                            <span class="slds-text-heading_label-normal">Hint:</span>
+                            <span class="badge slds-badge slds-m-left--xx-small yellow">
+                                <span class="white-text">Consult your family doctor or an ENT specialist.</span>
+                            </span>
+                        </li>
+                    </ul>
+
+                    <div class="slds-box slds-m-left--large slds-m-right--large slds-m-vertical_x-small">
+                        <ul class="slds-has-block-links_space">
+                            <li class="slds-item slds-m-bottom--xx-small">
+                                <span class="slds-text-heading_label-normal">Supporting evidence:</span>
+                                <div class="slds-m-around--xx-small" style="display: inline-block">
+                                    <lightning:badge label="Headache,pulsating"/>  
+                                </div>
+                                <div class="slds-m-around--xx-small" style="display: inline-block">
+                                    <lightning:badge label="Facial pain, paranasal sinus"/>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                   
+                </div>
+            </aura:if>
+            <div name="footer" class="slds-p-around_small">
+                <aura:if isTrue="{!v.currentStepInteger == 1}">
+                    <div class="slds-text-align_right"> 
+                        <lightning:button variant="neutral" label="Start Diagnosis" onclick="{!c.handleNext}" />
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.currentStepInteger == 2}">
+                    <div class="slds-text-align_right"> 
+                        <lightning:button variant="neutral" label="Summarize" onclick="{!c.handleNext}" />
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.currentStepInteger == 3}">
+                    <div class="slds-grid"> 
+                        <div class="slds-col slds-size_1-of-3 slds-text-align_left flex" > 
+                            <ui:inputCheckbox label="" value="true"/>
+                            <span class="form-element__label uiLabel slds-p-left_small">Attach to Care Plan</span>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3 slds-text-align_right"> 
+                            <lightning:button variant="neutral" label="Restart Diagnosis" onclick="{!c.handleRestart}" />
+                            <lightning:button variant="neutral" label="Generate PDF" />
+                            <lightning:button variant="brand" label="Save Result" /> 
+                        </div>
+                    </div>
+                </aura:if>
+            </div>
+        </div>
+    </div>
+
+</aura:component>

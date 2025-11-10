@@ -1,0 +1,14 @@
+.datatable-container {
+    width: 100%;         /* Full width of modal content */
+    max-width: 900px;    /* Set max width as needed */
+    height: 400px;       /* Adjust height */
+    overflow: auto;      /* Scroll if content overflows */
+}
+
+.subheader {
+    font-size: 1.25rem; /* SLDS medium heading size */
+    font-weight: 600;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #d8dde6; /* subtle divider */
+    padding-bottom: 0.5rem;
+}

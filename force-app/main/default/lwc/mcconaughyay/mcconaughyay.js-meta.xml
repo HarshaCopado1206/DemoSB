@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="audioPlayer">
+    <apiVersion>58.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>McConaughYAY</masterLabel>
+	<description>The best LWC ever created. Better than confetti. Created by Larry Davis</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage, lightning__RecordPage, lightning__HomePage">
+            <property name="delayTime" type="Integer" default="2000" label="Confetti Delay (ms)" description="Set the delay time in milliseconds before the confetti appears."/>
+            <property name="emojis" type="String" default="🏈🌟🎬🤠💪😎" label="Emojis" description="Set the emojis for the confetti."/>
+            <property name="number" type="String" default="tons" label="Number" description="Set the number of confetti elements." datasource="few,normal,plenty,tons"/>
+            <property name="size" type="String" default="large" label="Size" description="Set the size of the confetti." datasource="small,medium,large"/>
+            <supportedFormFactors>
+                <supportedFormFactor type="Small" />
+                <supportedFormFactor type="Large" />
+            </supportedFormFactors>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

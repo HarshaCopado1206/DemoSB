@@ -1,0 +1,65 @@
+.THIS {
+}
+
+.THIS .S1Input label.slds-form-element__label.slds-no-flex {
+    display:none;
+}
+
+.THIS .slds-vertical-tabs__nav {
+    width: 40px !important;
+}
+
+.THIS .height2 {
+    height: 2rem;
+}
+
+.THIS .clickable {
+    cursor: pointer;
+}
+
+.THIS hr {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.THIS .slds-progress-bar,
+.THIS .slds-progress-bar__value {
+    border-radius: 5px;
+}
+
+.THIS .slds-progress-bar {
+    width:115px;
+}
+
+.THIS .slds-progress-bar__value {
+    background: #fdb449;
+}
+
+.THIS .yellow {
+    background: #fdb449;
+}
+
+.THIS .icd10-badge {
+    height: fit-content;
+    background-color: rgba(0, 95, 178, 0.7);
+    cursor: help;
+}
+
+.THIS .severity-box {
+    padding: 7px 12px;
+    cursor: help;
+}
+
+.THIS .white-text {
+    color: white;
+}
+
+.THIS .flex {
+    display: flex;
+    align-items: center;
+}
+
+.THIS .uiLabel.form-element__label {
+    color: rgb(62, 62, 60);
+    line-height: 2rem;
+}

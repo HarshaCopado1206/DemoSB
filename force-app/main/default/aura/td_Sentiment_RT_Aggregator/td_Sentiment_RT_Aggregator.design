@@ -1,0 +1,8 @@
+<design:component label="Einstein Real Time Sentiment">
+    <design:attribute name="username" label="Username" description="Username used to sign up to Einstein API eg tdunlop@salesforce.com" default="tdunlop@salesforce.com"/>
+    <design:attribute name="sentimentModelId" label="Sentiment Model Id" description="Enter your custom sentiment model or leave for OOTB model" default="CommunitySentiment" />
+    <sfdc:objects>
+        <sfdc:object>VoiceCall</sfdc:object>
+        <sfdc:object>LiveChatTranscript</sfdc:object>
+    </sfdc:objects>
+</design:component>

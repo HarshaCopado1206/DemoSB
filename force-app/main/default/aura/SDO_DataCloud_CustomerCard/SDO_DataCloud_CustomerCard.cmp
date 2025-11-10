@@ -1,0 +1,115 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" controller="SDO_DataCloud_CustomerCard_Ctrl" access="global" >
+    <aura:attribute name="customer" type="Map" access="global"/>
+     
+    <aura:attribute name="background" type="String"/>  
+    <aura:attribute name="inverseIconColors" type="Boolean"/> 
+   	<aura:attribute name="mini" type="Boolean"/> 
+    
+    <aura:attribute name="metric1Icon" type="String"/>
+    <aura:attribute name="metric1Label" type="String"/>
+    <aura:attribute name="metric2Icon" type="String"/>
+    <aura:attribute name="metric2Label" type="String"/>
+	<aura:attribute name="metric2Value" type="String"/>
+    <aura:attribute name="segmentNames" type="String"/>
+	<aura:attribute name="segList" type="String"/>
+ 
+    <aura:attribute name="Analytics" type="Boolean"/>
+    <aura:attribute name="Commerce" type="Boolean"/>
+    <aura:attribute name="Marketing" type="Boolean"/>
+    <aura:attribute name="Mulesoft" type="Boolean"/>
+    <aura:attribute name="Sales" type="Boolean"/>
+    <aura:attribute name="Service" type="Boolean"/>
+    <aura:attribute name="SageMaker" type="Boolean"/>
+    <aura:attribute name="Snowflake" type="Boolean"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>   
+    
+    <div class="slds-card card" aura:id="card" style="{! 'background-color: ' + (v.background) + ' '}">        
+        <div class="slds-media slds-m-left_x-large slds-m-top_large slds-m-bottom_medium">
+            <div class="slds-media_figure">
+                <div class="customer-image-container">
+                    <aura:if isTrue="{!empty(v.customer.contactPicture)}">
+                        <img src="/_slds/images/themes/lightning_lite/lightning_lite_profile_avatar_160.png" class="customer-avatar"/>
+                        <aura:set attribute="else">
+                            <img src="{!v.customer.contactPicture}" class="customer-avatar"/>
+                        </aura:set>   
+                    </aura:if>                    
+                </div>
+            </div>
+            <div class="slds-media_body slds-m-left_medium slds-m-top_large">
+                <div class="{!v.inverseIconColors ? 'slds-text-heading_medium_inverse title-weight' : 'slds-text-heading_medium title-weight'}">{!v.customer.name}</div>
+                <aura:if isTrue="{!not(empty(v.customer.city))}">
+                    <div class="{!v.inverseIconColors ? 'slds-text-color_inverse' : 'slds-text-color'}">{!v.customer.city + ', ' + v.customer.state}</div>
+                </aura:if>    
+            </div>      
+        </div>
+
+        <div class="{!v.inverseIconColors ? 'slds-media slds-m-left_x-large slds-m-right_x-large slds-m-bottom_large slds-border_bottom_inverse slds-p-bottom_medium' : 'slds-media slds-m-left_x-large slds-m-right_x-large slds-m-bottom_large slds-border_bottom slds-p-bottom_medium'}" style="{! v.mini ? 'border-bottom: 0px !important;' : 'border-bottom:' }" >
+            <div class="slds-media_body">
+                <div>
+                    <img class="metricIcon" src="{! '/resource/GenieSidebarAssets/Icons/type=Contact_' + v.inverseIconColors + '.png'}"></img>
+                    <span class="{!v.inverseIconColors ? 'slds-text-color_inverse' : 'slds-text-color'}">Customer ID</span>
+                    <span class="{!v.inverseIconColors ? 'contact-info_inverse' : 'contact-info'}">{!v.customer.customerId}</span>
+                </div>
+                <div>
+                    <img class="metricIcon" src="{! '/resource/GenieSidebarAssets/Icons/type=Mail_' + v.inverseIconColors + '.png'}"/>
+                    <span class="{!v.inverseIconColors ? 'slds-text-color_inverse' : 'slds-text-color'}">Email Address</span>
+                    <span class="{!v.inverseIconColors ? 'contact-info_inverse' : 'contact-info'}">{!v.customer.email}</span>
+                </div>
+                <div style="{! v.mini==true ? 'display: none;' : 'display: block;' }">
+                    <div>
+                        <img class="metricIcon" src="{! '/resource/GenieSidebarAssets/Icons/type=Phone_' + v.inverseIconColors + '.png'}"/>
+                        <span class="{!v.inverseIconColors ? 'slds-text-color_inverse' : 'slds-text-color'}">Phone Number</span>
+                        <span class="{!v.inverseIconColors ? 'contact-info_inverse' : 'contact-info'}">{!v.customer.phone}</span>
+                    </div>
+                    <div>
+                        <img class="metricIcon" src="{! '/resource/GenieSidebarAssets/Icons/type=Geotag_' + v.inverseIconColors + '.png'}"/>
+                        <span class="{!v.inverseIconColors ? 'slds-text-color_inverse' : 'slds-text-color'}">Address</span>
+                        <div class="{!v.inverseIconColors ? 'contact-info_inverse' : 'contact-info'}" style="display:inline-block;">{!v.customer.street}</div>
+                        <aura:if isTrue="{!not(empty(v.customer.city))}">
+                            <div class="{!v.inverseIconColors ? 'contact-info_inverse' : 'contact-info'}" style="margin-left: 112px;margin-top: -10px;">{!v.customer.city}, {!v.customer.state}&nbsp;{!v.customer.zip}</div>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="{! v.mini==true ? 'display: none;' : 'display: block;' }">
+            <div class="{!v.inverseIconColors ? 'slds-media slds-m-left_x-large slds-m-right_x-large slds-m-bottom_medium slds-border_bottom_inverse slds-p-bottom_medium' : 'slds-media slds-m-left_x-large slds-m-right_x-large slds-m-bottom_large slds-border_bottom slds-p-bottom_medium'}">
+                <div class="slds-media_body">
+                    <div class="CustomerMetric" style="{! v.metric1Icon=='None' ? 'display: none;' : 'display: block;' }">
+                        <img class="metricIcon" src="{!'/resource/GenieSidebarAssets/Icons/type=' + v.metric1Icon + '_' + v.inverseIconColors + '.png'}"></img>
+                        <span class="{!v.inverseIconColors ? 'slds-text-color_inverse' : 'slds-text-color'}">{!v.metric1Label}</span>
+                        <span class="{!v.inverseIconColors ? 'contact-info_inverse' : 'contact-info'}">{!v.customer.kpi2}</span>
+                    </div>
+                    <div class="CustomerMetric" style="{! v.metric2Icon=='None' ? 'display: none;' : 'display: block;' }">
+                        <img class="metricIcon" src="{!'/resource/GenieSidebarAssets/Icons/type=' + v.metric2Icon + '_' + v.inverseIconColors + '.png'}"></img>
+                        <span class="{!v.inverseIconColors ? 'slds-text-color_inverse' : 'slds-text-color'}">{!v.metric2Label}</span>
+                        <span class="{!v.inverseIconColors ? 'contact-info_inverse' : 'contact-info'}">{!v.metric2Value}</span>
+                    </div>
+                    <div class="SegmentBadges">
+                        <lightning:badge style="{! v.segList[0]==null ? 'display: none;' : 'display: inline-flex;' }" label="{!v.segList[0]}"/>
+                        <lightning:badge style="{! v.segList[1]==null ? 'display: none;' : 'display: inline-flex;' }" label="{!v.segList[1]}"/>
+                        <lightning:badge style="{! v.segList[2]==null ? 'display: none;' : 'display: inline-flex;' }" label="{!v.segList[2]}"/>
+                    </div>
+                </div>
+            </div>
+  		</div>
+           
+        <!-- Powered By Section -->
+        <div style="{! v.mini==true ? 'display: none;' : 'display: block;' }" class="slds-media slds-m-left_x-large slds-m-right_x-large slds-m-bottom_large">
+            <div class="slds-media_body">
+                <div class="{!v.inverseIconColors ? 'slds-text-color_inverse' : 'slds-text-color'}">Profile Data: </div>
+                <aura:if isTrue="{!(v.Analytics)}"><img class="productIcon" src="{! '/resource/GenieSidebarAssets/Icons/icon=Analytics_' + v.inverseIconColors + '.png'}"></img></aura:if>
+                <aura:if isTrue="{!(v.Commerce)}"><img class="productIcon" src="{! '/resource/GenieSidebarAssets/Icons/icon=Commerce_' + v.inverseIconColors + '.png'}"></img></aura:if>
+                <aura:if isTrue="{!(v.Marketing)}"><img class="productIcon" src="{! '/resource/GenieSidebarAssets/Icons/icon=Marketing_' + v.inverseIconColors + '.png'}"></img></aura:if>
+                <aura:if isTrue="{!(v.Mulesoft)}"><img class="productIcon" src="{! '/resource/GenieSidebarAssets/Icons/icon=Mulesoft_' + v.inverseIconColors + '.png'}"></img></aura:if>
+                <aura:if isTrue="{!(v.Sales)}"><img class="productIcon" src="{! '/resource/GenieSidebarAssets/Icons/icon=Sales_' + v.inverseIconColors + '.png'}"></img></aura:if>
+                <aura:if isTrue="{!(v.Service)}"><img class="productIcon" src="{! '/resource/GenieSidebarAssets/Icons/icon=Service_' + v.inverseIconColors + '.png'}"></img></aura:if>
+                <aura:if isTrue="{!(v.SageMaker)}"><img class="productIcon" src="{! '/resource/GenieSidebarAssets/Icons/icon=SageMaker_' + v.inverseIconColors + '.png'}"></img></aura:if>
+                <aura:if isTrue="{!(v.Snowflake)}"><img class="productIcon" src="{! '/resource/GenieSidebarAssets/Icons/icon=Snowflake_' + v.inverseIconColors + '.png'}"></img></aura:if>
+            </div>
+        </div>                 
+    </div>
+    
+</aura:component>

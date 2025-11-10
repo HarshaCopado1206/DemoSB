@@ -1,0 +1,64 @@
+.THIS {}
+
+.THIS {
+    font-family: 'Salesforce Sans', Helvetica, Arial, sans-serif !important;
+    line-height: 1.5;
+    color: #16325c !important;
+    font-size: .8125rem;
+}
+
+.THIS .slds-modal {
+    position: initial !important;
+}
+
+.THIS .slds-modal__container {
+    width: 100% !important;
+    padding-top: 0px !important;
+}
+
+.THIS .slds-modal__content {
+    height: 61vh !important;
+}
+
+.THIS .slds-accordion__section {
+    padding: 0.75rem 0rem !important;
+}
+
+.THIS .slds-accordion__summary-heading {
+    background: #F3F2F2 !important;
+    padding: 6px 6px !important;
+}
+
+.THIS .indication {
+    padding-top: 5px;
+    padding-left: 3px;
+}
+
+.THIS .related-indications {
+    padding-top: 3px;
+    padding-left: 25px;
+}
+
+.THIS .headingSize {
+    font-size: large;
+}
+
+.THIS .CCIQUMGuidelineView .textHeading {
+    font-weight: 300;
+    font-size: 1.25rem;
+    line-height: 1.25;
+}
+
+.THIS .CCIQUMGuidelineView .textSmall {
+    font-size: 1rem;
+    line-height: 1.25;
+    font-family: 'Salesforce Sans', Helvetica, Arial, sans-serif !important;
+}
+
+.THIS a.ReferenceLink {
+    font-size: smaller;
+}
+
+.THIS span.CCIQUMLinkText {
+    line-height: 2rem;
+}

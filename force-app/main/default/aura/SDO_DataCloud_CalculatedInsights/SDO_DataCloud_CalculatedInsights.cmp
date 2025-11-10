@@ -1,0 +1,43 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" controller="SDO_DataCloud_CustomerCard_Ctrl" access="global" >
+    <aura:attribute name="customer" type="Map" access="global"/>
+    <aura:attribute name="metric1Label" type="String"/>
+    <aura:attribute name="metric2Label" type="String"/>
+    <aura:attribute name="metric3Label" type="String"/>
+    <aura:attribute name="metric4Label" type="String"/>    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  
+    
+    <lightning:card title="Calculated Insights" iconName="standard:data_cloud">
+        <aura:set attribute="actions">
+            <lightning:buttonIcon iconName="utility:down" variant="border-filled" alternativeText="Show More" size="small"/>
+        </aura:set>
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="6" class="slds-p-bottom_x-small" padding="horizontal-small">
+                <div class="header-column">
+                    <p class="field-title" title="metric1Label">{!v.metric1Label}</p>
+                    <p class="field-value">{!v.customer.customerCSAT}</p>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" class="slds-p-bottom_x-small" padding="horizontal-small">
+                <div class="header-column">
+                    <p class="field-title" title="metric2Label">{!v.metric2Label}</p>
+                    <p class="field-value">{!v.customer.kpi3}</p>
+                </div>
+            </lightning:layoutItem>
+            <br/> <br/>
+            <lightning:layoutItem size="6" class="slds-p-bottom_x-small" padding="horizontal-small">
+                <div class="header-column">
+                    <p class="field-title" title="metric3Label">{!v.metric3Label}</p>
+                    <p class="field-value">{!v.customer.kpi4}</p>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6" class="slds-p-bottom_x-small" padding="horizontal-small">
+                <div class="header-column">
+                    <p class="field-title" title="metric4Label">{!v.metric4Label}</p>
+                    <p class="field-value">{!v.customer.kpi2}</p>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+        
+    </lightning:card>
+</aura:component>

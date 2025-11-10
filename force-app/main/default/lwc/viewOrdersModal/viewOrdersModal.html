@@ -1,0 +1,16 @@
+<template>
+    <template if:true={orders.length}>
+        <div class="subheader">Orders List</div>
+        <div class="datatable-container">
+            <lightning-datatable
+                key-field="Id"
+                data={orders}
+                columns={columns}
+                hide-checkbox-column
+            ></lightning-datatable>
+        </div>
+    </template>
+    <template if:true={error}>
+        <p class="slds-text-color_error">Error loading orders</p>
+    </template>
+</template>
