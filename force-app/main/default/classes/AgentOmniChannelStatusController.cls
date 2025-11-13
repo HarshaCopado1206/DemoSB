@@ -16,7 +16,7 @@ public class AgentOmniChannelStatusController {
 		
         return us;
     }
-    
+    //changes for demo
     @AuraEnabled
     public static User getUser(Id recordId) {
         User u = [
